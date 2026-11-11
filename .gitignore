@@ -1,3 +1,4 @@
 public/ 
 github-token.txt  
 grok-api.txt  
+__pycache__/  
