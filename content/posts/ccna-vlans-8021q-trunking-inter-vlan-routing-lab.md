@@ -44,10 +44,10 @@ The following diagram models a classic “router‑on‑a‑stick” scenario. T
 
 ```mermaid
 graph TD
-    R["Router (ISR‑4321)"] -->|Trunk (Gig0/0)| S["Switch (Catalyst 2960)"]
-    H1["Host‑A (VPCS)"] -->|Access (Fa0/1)| S
-    H2["Host‑B (VPCS)"] -->|Access (Fa0/2)| S
-    H3["Host‑C (VPCS)"] -->|Access (Fa0/3)| S
+    R["Router (ISR‑4321)"] -->|"Trunk (Gig0/0)"| S["Switch (Catalyst 2960)"]
+    H1["Host‑A (VPCS)"] -->|"Access (Fa0/1)"| S
+    H2["Host‑B (VPCS)"] -->|"Access (Fa0/2)"| S
+    H3["Host‑C (VPCS)"] -->|"Access (Fa0/3)"| S
     classDef router fill:#ffebcc,stroke:#b8860b,stroke-width:2px;
     classDef switch fill:#e0f7fa,stroke:#006064,stroke-width:2px;
     classDef host fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;

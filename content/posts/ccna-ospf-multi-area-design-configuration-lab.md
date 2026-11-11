@@ -50,15 +50,15 @@ A **broadcast LAN** (VLAN 10) connects `R3`, `R4`, and a **VPCS host** (`PC1`)
 
 ```mermaid
 graph LR
-    R1["Router R1 (Core)"] -->|Gig0/0| R2["Router R2 (Core)"]
-    R1 -->|Gig0/1| R3["Router R3 (Dist)"]
-    R1 -->|Gig0/2| R4["Router R4 (Dist)"]
-    R3 -->|Gig0/1| R5["Router R5 (Access)"]
-    R3 -->|Gig0/2| R6["Router R6 (Access)"]
-    R4 -->|Gig0/1| R7["Router R7 (Access)"]
+    R1["Router R1 (Core)"] -->|"Gig0/0"| R2["Router R2 (Core)"]
+    R1 -->|"Gig0/1"| R3["Router R3 (Dist)"]
+    R1 -->|"Gig0/2"| R4["Router R4 (Dist)"]
+    R3 -->|"Gig0/1"| R5["Router R5 (Access)"]
+    R3 -->|"Gig0/2"| R6["Router R6 (Access)"]
+    R4 -->|"Gig0/1"| R7["Router R7 (Access)"]
     subgraph BroadcastLAN["VLAN 10 Broadcast LAN (DR/BDR)"]
-        R3 -->|Gig0/3| PC1["VPCS PC1 (Ubuntu)"]
-        R4 -->|Gig0/3| PC2["VPCS PC2 (Ubuntu)"]
+        R3 -->|"Gig0/3"| PC1["VPCS PC1 (Ubuntu)"]
+        R4 -->|"Gig0/3"| PC2["VPCS PC2 (Ubuntu)"]
     end
     style BroadcastLAN fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5
 ```
