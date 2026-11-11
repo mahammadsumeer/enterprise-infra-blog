@@ -21,7 +21,7 @@
     "level": "Intermediate",
     "slug": "ccna-ospf-multi-area-design-configuration-lab",
     "title": "CCNA Lab 02: Enterprise Multi-Area OSPF Design, DR/BDR Election & LSA Troubleshooting",
-    "done": false
+    "done": true
   },
   {
     "id": 4,
