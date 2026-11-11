@@ -1,34 +1,12 @@
-<!-- layouts/partials/adsense-slot.html -->
-{{/*
-  Google AdSense Partial
-  ----------------------
-  This partial renders a responsive AdSense ad unit with zero CLS (Cumulative Layout Shift).
-  It enforces a minimum height of 280px to reserve space before the ad loads, preventing layout shifts.
-
-  Usage:
-    {{ partial "adsense-slot.html" . }}
-
-  Replace the placeholder values for YOUR_PUB_ID and YOUR_AD_SLOT with your actual AdSense IDs.
-*/}}
-<div class="adsense-slot" style="min-height: 280px; width: 100%;">
-  <!-- Replace "ca-pub-XXXXXXXXXXXXXXXX" with your AdSense Publisher ID -->
+<div class="adsense-container" style="min-height: 280px; margin: 1.5rem 0; text-align: center; background: var(--entry); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+  <!-- Replace ca-pub-XXXXXXXXXXXXXXXX and data-ad-slot with your Google AdSense IDs once approved -->
+  <!--
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
        data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
 </div>
-
-<!-- Optional: Add CSS to your site’s stylesheet for finer control -->
-{{/*
-  .adsense-slot {
-    /* Ensure the container reserves space before the ad loads */
-    min-height: 280px; /* Adjust if your ad size differs */
-    width: 100%;
-    overflow: hidden;
-  }
-*/}}
