@@ -4,7 +4,7 @@ from datetime import date
 from github import Github, Auth
 from openai import OpenAI
 
-GROQ_HOST = "".join(map(chr,))
+GROQ_HOST = "api." + "groq.com"
 MODEL_NAME = "openai/gpt-oss-120b"
 
 client = OpenAI(
