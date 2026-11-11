@@ -9,235 +9,261 @@ categories: ['Hardware & Networking']
 # Lab Objective & Prerequisites
 
 **Objective**:  
-- Understand how data is encapsulated across the OSI and TCP/IP layers.
-- Capture and dissect packets with Wireshark to visualize headers at each layer.
-- Build a small enterprise‑scale topology using free/open‑source network emulators.
-- Correlate IP addressing, VLANs, routing, and security controls with real‑world packet flows.
+- Demonstrate how data traverses the OSI 7‑layer model and the TCP/IP 4‑layer model using real packet captures.  
+- Correlate each encapsulation step (Ethernet, IP, TCP/UDP, Application) with the corresponding OSI layer.  
+- Build a minimal enterprise‑grade topology in a virtual lab, generate traffic, capture with Wireshark, and analyze the packet headers.
 
-**Prerequisites** (all free or community editions):
-- **GNS3** (or **EVE‑NG**) installed on a workstation (Windows/macOS/Linux).
-- **VirtualBox** (or **VMware Workstation Player**) for hosting virtual routers/switches.
-- **Wireshark** latest stable release.
-- Basic familiarity with Cisco IOS/Juniper Junos CLI.
-- Optional: Free tier accounts on **AWS**, **Azure**, or **GCP** for a cloud‑hosted VM to act as an external server.
+**Prerequisites** (all free / open‑source):
+- GNS3 **or** EVE‑NG (latest stable release) – for virtual network devices.
+- Cisco IOSvL2 or IOSv image (free for learning) **or** open‑source VyOS/FRR routers.
+- A Linux host VM (Ubuntu 22.04) – will act as a client/server and run `tcpdump`/`Wireshark`.
+- VirtualBox or VMware Workstation Player – to host the VMs if not using a cloud sandbox.
+- Optional: Free tier account on AWS/Azure/GCP to spin up a cloud‑based VM for cross‑cloud traffic.
+- Wireshark 4.x installed on the host OS (Windows/macOS/Linux).
 
 # Enterprise Architecture Topology
 
 ```mermaid
 flowchart TB
-    subgraph Cloud["Public Cloud (Free Tier)"]
-        CloudVM["VM (Ubuntu)\n10.0.100.10"]
-    end
-    subgraph Lab["GNS3/EVE‑NG Lab"]
+    subgraph GNS3_EVE_NG[Virtual Lab]
         direction LR
-        R1["Router R1\n(192.168.10.1/24)\nOSPF Area 0"]
-        R2["Router R2\n(192.168.20.1/24)\nOSPF Area 0"]
-        SW1["Layer‑2 Switch\nVLAN 10/20"]
-        PC1["Client PC1\n192.168.10.10"]
-        PC2["Client PC2\n192.168.20.10"]
-        R1 -- "Gig0/0" --> SW1
-        R2 -- "Gig0/0" --> SW1
-        SW1 -- "Access VLAN10" --> PC1
-        SW1 -- "Access VLAN20" --> PC2
-        R2 -- "Serial0/0/0" --> CloudVM
+        Client[Client VM (Ubuntu)] -->|Ethernet| Switch1[Layer‑2 Switch]
+        Server[Server VM (Ubuntu)] -->|Ethernet| Switch1
+        Router[Router (IOSvL2)] -->|Trunk| Switch1
+        Cloud[Cloud VM (AWS Free Tier)] -->|IPsec Tunnel| Router
     end
-    CloudVM -.-> R2
+    style GNS3_EVE_NG fill:#f9f9f9,stroke:#333,stroke-width:2px
+    classDef vm fill:#e3f2fd,stroke:#1565c0,stroke-width:1px;
+    class Client,Server,Cloud vm;
 ```
+
+*The topology mimics a classic enterprise edge: a client and a server on the same LAN, a router providing WAN connectivity, and an optional cloud VM to illustrate cross‑internet traffic.*
 
 # Addressing & Resource Inventory Table
 
-| Device | Role | Management IP | Data Interface(s) | VLAN(s) | OS/Software |
-|--------|------|---------------|-------------------|---------|-------------|
-| R1 | Edge Router | 10.0.0.1/24 (mgmt) | Gi0/0 – 192.168.10.1/24 (VLAN10) | 10 | Cisco IOS‑vEOS (Free) |
-| R2 | Core Router | 10.0.0.2/24 (mgmt) | Gi0/0 – 192.168.20.1/24 (VLAN20)\nSer0/0/0 – 10.0.100.1/30 (to Cloud) | 20 | Cisco IOS‑vEOS (Free) |
-| SW1 | L2 Switch | 10.0.0.3/24 (mgmt) | Trunk – Gi0/1 (VLAN10,20) | 10,20 | Open vSwitch (OVS) |
-| PC1 | End‑Host | 10.0.0.11/24 | eth0 – 192.168.10.10/24 | 10 | Ubuntu 22.04 (VM) |
-| PC2 | End‑Host | 10.0.0.12/24 | eth0 – 192.168.20.10/24 | 20 | Ubuntu 22.04 (VM) |
-| CloudVM | External Server | 10.0.100.10/30 | eth0 – 10.0.100.2/30 | n/a | Ubuntu 22.04 (Free Tier) |
+| Device | Role | Management IP (IPv4) | Data IP (IPv4) | Interface(s) | OS/Platform |
+|--------|------|----------------------|----------------|--------------|-------------|
+| Client VM | End‑host (Application) | 192.168.10.10/24 (mgmt) | 192.168.10.10/24 (data) | eth0 (connected to Switch1) | Ubuntu 22.04 LTS |
+| Server VM | End‑host (Application) | 192.168.10.20/24 (mgmt) | 192.168.10.20/24 (data) | eth0 (connected to Switch1) | Ubuntu 22.04 LTS |
+| Switch1 | Layer‑2 distribution | 192.168.10.2/24 (SVI) | N/A | Gi0/1‑Gi0/2 (access), Gi0/24 (trunk) | Cisco IOSvL2 |
+| Router | Edge router (IP routing) | 192.168.10.1/24 (LAN) | 10.0.0.1/30 (WAN) | Gi0/0 (LAN), Gi0/1 (WAN) | Cisco IOSv (or VyOS) |
+| Cloud VM | Remote host (Internet) | 3.93.123.45/32 (public) | 10.0.0.2/30 (WAN) | eth0 (attached to router via IPsec) | Ubuntu 22.04 (AWS Free Tier) |
 
 # Step‑By‑Step Configuration
 
-## 1. Build the Lab in GNS3/EVE‑NG
-1. Create a new project **OSI_TCPIP_Lab**.
-2. Drag two **Cisco vEOS** routers, one **Open vSwitch** node, and two **Ubuntu** VMs.
-3. Connect as shown in the diagram – ensure the link between R2 and CloudVM is a **Serial** (or point‑to‑point) interface.
-4. Assign the management IPs on the **cloud‑init** or **host‑only** adapters of each node.
+## 1️⃣ Deploy the Virtual Devices
 
-## 2. Router R1 Configuration (Cisco IOS‑vEOS)
+- **GNS3/EVE‑NG**: Create a new project, drag‑and‑drop the following appliances:
+  - `Ubuntu Server` (x2) → rename to **Client** and **Server**.
+  - `Cisco IOSvL2` → rename to **Switch1**.
+  - `Cisco IOSv` (or VyOS) → rename to **Router**.
+  - (Optional) `AWS EC2` instance – add as a **Cloud VM** using the *Cloud* node type.
+- Connect interfaces as shown in the Mermaid diagram.
+- Set each node to **Start on boot**.
+
+## 2️⃣ Basic Device OS Configuration
+
+### 2.1 Ubuntu Client & Server (copy‑paste to each VM)
+
 ```bash
-# Enter global configuration mode
-configure terminal
+#!/bin/bash
+# Configure static IPv4 on eth0
+cat <<EOF | sudo tee /etc/netplan/01-static.yaml
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [${HOST_IP}/24]
+      gateway4: 192.168.10.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+EOF
+sudo netplan apply
 
-! Management interface (Loopback0) – optional for out‑of‑band
-interface Loopback0
- ip address 10.0.0.1 255.255.255.0
+# Install required tools
+sudo apt-get update && sudo apt-get install -y tcpdump wireshark iperf3
+
+# Enable non‑root capture for the user (replace $USER)
+sudo dpkg-reconfigure wireshark
+# Choose "Yes" to allow non‑superusers to capture packets
+
+# Verify connectivity
+ping -c 3 192.168.10.1
+```
+
+> **Replace `${HOST_IP}`** with `192.168.10.10` on the client and `192.168.10.20` on the server.
+
+### 2.2 Cisco Switch1 (IOSvL2)
+
+```cisco
+! Basic switch configuration – copy‑paste into the console
+enable
+configure terminal
 !
-! Data interface – VLAN10 (access mode via switch trunk)
+! Management VLAN (10) and SVI
+interface vlan 10
+ ip address 192.168.10.2 255.255.255.0
+ no shutdown
+!
+! Access ports for client & server
+interface range GigabitEthernet0/1-2
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+!
+! Trunk port toward router
+interface GigabitEthernet0/24
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10
+ no shutdown
+!
+! Enable CDP for visibility (optional)
+cdp run
+!
+end
+write memory
+```
+
+### 2.3 Cisco Router (IOSv) – Core IP Routing
+
+```cisco
+! Router configuration – copy‑paste into the console
+enable
+configure terminal
+!
+! LAN interface (connected to Switch1)
 interface GigabitEthernet0/0
- description Connected to SW1 – VLAN10
  ip address 192.168.10.1 255.255.255.0
  no shutdown
 !
-! OSPF – advertise VLAN10 subnet
-router ospf 1
- router-id 1.1.1.1
- network 192.168.10.0 0.0.0.255 area 0
- network 10.0.0.0 0.0.0.255 area 0
+! WAN interface (connected to Cloud VM or simulated ISP)
+interface GigabitEthernet0/1
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
 !
-! Enable IP forwarding (default on routers)
-exit
+! Static route to the cloud network
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+!
+! (Optional) Simple IPsec tunnel to Cloud VM – using pre‑shared key
+crypto isakmp policy 10
+ encr aes
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 86400
+!
+crypto isakmp key MySecretKey address 10.0.0.2
+!
+crypto ipsec transform-set ESP-AES256-SHA esp-aes 256 esp-sha-hmac
+!
+crypto map VPN 10 ipsec-isakmp
+ set peer 10.0.0.2
+ set transform-set ESP-AES256-SHA
+ match address 100
+!
+interface GigabitEthernet0/1
+ crypto map VPN
+!
+access-list 100 permit ip 192.168.10.0 0.0.0.255 10.0.0.2 0.0.0.0
+!
+end
 write memory
 ```
 
-## 3. Router R2 Configuration (Cisco IOS‑vEOS)
+### 2.4 Cloud VM (AWS EC2 – free tier) – Minimal Setup
+
 ```bash
-configure terminal
-!
-interface Loopback0
- ip address 10.0.0.2 255.255.255.0
-!
-! Data interface – VLAN20
-interface GigabitEthernet0/0
- description Connected to SW1 – VLAN20
- ip address 192.168.20.1 255.255.255.0
- no shutdown
-!
-! Point‑to‑point link to CloudVM (use /30 mask)
-interface Serial0/0/0
- description To CloudVM
- ip address 10.0.100.1 255.255.255.252
- no shutdown
-!
-router ospf 1
- router-id 2.2.2.2
- network 192.168.20.0 0.0.0.255 area 0
- network 10.0.100.0 0.0.0.3 area 0
- network 10.0.0.0 0.0.0.255 area 0
-!
-exit
-write memory
+#!/bin/bash
+# Run on first boot (User Data) or via SSH
+sudo apt-get update && sudo apt-get install -y tcpdump iperf3
+# Assign the secondary private IP (10.0.0.2) – AWS does this automatically if you create a second ENI.
+# Verify routing back to 192.168.10.0/24 via the VPN tunnel.
 ```
 
-## 4. Switch SW1 (Open vSwitch) – VLAN Trunk
+## 3️⃣ Generate Traffic & Capture with Wireshark
+
+1. **Start Wireshark** on the **Client VM** (or on the host OS if you prefer to capture on the virtual NIC).  
+   - Select interface `eth0` (or the GNS3/EVE‑NG host‑only adapter).
+   - Apply capture filter: `host 192.168.10.20` to focus on traffic to the server.
+2. **Generate TCP traffic** from client to server:
+
 ```bash
-# Assuming you are on the OVS host shell
-# Create bridge
-ovs-vsctl add-br br0
-
-# Add ports (replace <portX> with actual interface names from GNS3)
-ovs-vsctl add-port br0 <port1> -- set Interface <port1> type=internal
-ovs-vsctl add-port br0 <port2> -- set Interface <port2> type=internal
-ovs-vsctl add-port br0 <port3> -- set Interface <port3> type=internal
-
-# Create VLANs 10 and 20 on the bridge
-ovs-vsctl add-port br0 vlan10 tag=10 -- set Interface vlan10 type=internal
-ovs-vsctl add-port br0 vlan20 tag=20 -- set Interface vlan20 type=internal
-
-# Set the trunk (port1) to allow both VLANs
-ovs-vsctl set port <port1> trunks=10,20
-
-# Assign management IP
-ip addr add 10.0.0.3/24 dev br0
-ip link set dev br0 up
+# On Client VM
+time iperf3 -c 192.168.10.20 -t 30 -i 5
 ```
 
-## 5. End‑Host PC1 (Ubuntu) Configuration
+3. **Generate UDP traffic** (to illustrate different transport layer):
+
 ```bash
-sudo ip addr add 192.168.10.10/24 dev eth0
-sudo ip link set dev eth0 up
-sudo ip route add default via 192.168.10.1
+iperf3 -c 192.168.10.20 -u -b 5M -t 20 -i 5
 ```
 
-## 6. End‑Host PC2 (Ubuntu) Configuration
+4. **Capture a single packet** with `tcpdump` for later offline analysis:
+
 ```bash
-sudo ip addr add 192.168.20.10/24 dev eth0
-sudo ip link set dev eth0 up
-sudo ip route add default via 192.168.20.1
+sudo tcpdump -i eth0 -c 1 -w /tmp/first_packet.pcap host 192.168.10.20
 ```
 
-## 7. CloudVM (Ubuntu – Free Tier) Configuration
-```bash
-sudo ip addr add 10.0.100.2/30 dev eth0
-sudo ip link set dev eth0 up
-# No default gateway needed; will be reached via R2
-```
-
-## 8. Enable Packet Capture on R1 (Embedded Wireshark/pcap)
-```bash
-# On R1, capture on Gi0/0 for 30 seconds and save to flash
-monitor capture CAP1 interface GigabitEthernet0/0 both
-monitor capture CAP1 start
-sleep 30
-monitor capture CAP1 stop
-monitor capture CAP1 export flash:cap1.pcap
-```
+5. **Stop the capture** in Wireshark after ~30 seconds.  Save the `.pcap` file for the analysis section.
 
 # Verification & Troubleshooting Commands
 
 | Goal | Command | Expected Result |
 |------|---------|-----------------|
-| Verify OSPF adjacency | `show ip ospf neighbor` | R1 sees R2 as **Full** state (State: Full, ID 2.2.2.2) |
-| Verify routing table | `show ip route ospf` | Routes for 192.168.20.0/24 and 10.0.100.0/30 present |
-| Ping across VLANs | `ping 192.168.20.10 source 192.168.10.10` (run on PC1) | Replies with <1 ms latency |
-| Ping cloud server | `ping 10.0.100.10` (run on PC1) | Successful, traverses R1 → R2 → CloudVM |
-| Capture analysis | Open `flash:cap1.pcap` in Wireshark → Apply filter `ip.addr==192.168.10.10` | Observe Ethernet II → IPv4 → TCP/ICMP headers, confirming encapsulation layers |
-| Verify VLAN tagging on switch | `ovs-ofctl dump-ports-desc br0` | Ports show `tag=10` or `tag=20` as configured |
-| Check interface status | `show ip interface brief` (routers) | All interfaces **up/up** with correct IPs |
-| Debug OSPF | `debug ip ospf events` (router) | Real‑time OSPF LSAs exchange logs |
+| Verify Layer‑2 connectivity | `show mac address-table` (Switch) | Client & Server MACs appear in VLAN 10.
+| Verify VLAN membership | `show vlan brief` (Switch) | VLAN 10 active, ports Gi0/1‑2 in access mode.
+| Verify trunk negotiation | `show interfaces trunk` (Switch) | Gi0/24 shows encapsulation dot1q, allowed VLAN 10.
+| Verify IP routing | `show ip route` (Router) | Default route points to 10.0.0.2; LAN network 192.168.10.0/24 present.
+| Test end‑to‑end ping | `ping 192.168.10.20` (Client) | Replies with < 1 ms latency.
+| Test cross‑cloud ping | `ping 3.93.123.45` (Client) | Replies via IPsec tunnel (if configured).
+| Verify IPsec SA | `show crypto ipsec sa` (Router) | Active SA with peer 10.0.0.2.
+| Capture verification | `tcpdump -r /tmp/first_packet.pcap -vv` | Shows Ethernet → IP → TCP headers.
+| Wireshark layer view | Open `.pcap` → expand **Frame → Ethernet → Internet Protocol → Transmission Control Protocol** | Each layer maps to OSI 1‑4 respectively.
+| Troubleshoot no traffic | `show interface status` (Switch) / `show ip interface brief` (Router) | Interfaces up, correct IPs.
+| Verify NTP (optional) | `show ntp status` (Router) | NTP synchronized – good for timestamp accuracy.
 
 # Security Hardening & Production Best Practices
 
-1. **Control Plane Policing (CoPP)** – limit OSPF/ICMP traffic on routers:
-   ```bash
-   policy-map OSPF-COPP
-    class class-default
-     police 500000 1000 exceed-action drop
-   interface GigabitEthernet0/0
-    service-policy input OSPF-COPP
-   ```
-2. **SSH Only, No Telnet** – enforce strong ciphers and key‑based auth:
-   ```bash
-   ip ssh version 2
-   ip ssh authentication-retries 3
-   line vty 0 4
-    transport input ssh
-    login local
-    exec-timeout 5 0
-   ```
-3. **SNMPv3 with Encryption** for monitoring:
-   ```bash
-   snmp-server group MONITOR v3 priv read-view ALL write-view NONE
-   snmp-server user monitor MONITOR v3 auth sha <authpass> priv aes 128 <privpass>
-   ```
-4. **Port‑Security on Switch** – limit MAC addresses per access port:
-   ```bash
-   interface <access-port>
-    switchport mode access
-    switchport access vlan 10
-    switchport port-security maximum 2
-    switchport port-security violation restrict
-    switchport port-security
-   ```
-5. **ACLs on Edge Router** – block inbound traffic to management network from the Internet:
-   ```bash
-   ip access-list extended MGMT-ACL
-    deny ip any 10.0.0.0 0.0.0.255
-    permit ip any any
-   interface Serial0/0/0
-    ip access-group MGMT-ACL in
-   ```
-6. **Logging & Syslog** – forward logs to a centralized server (could be the CloudVM):
-   ```bash
-   logging host 10.0.100.10
-   logging trap informational
-   ```
-7. **Regular Patch Cycle** – enable automatic security updates on all Ubuntu VMs:
-   ```bash
-   sudo apt update && sudo apt -y upgrade
-   sudo systemctl enable --now unattended-upgrades
-   ```
-8. **Backup Configurations** – schedule daily `copy running-config tftp://<backup‑server>/R1.cfg`.
+1. **Management Plane Isolation**
+   - Place out‑of‑band management VLAN (e.g., VLAN 99) on the switch; assign only the SVI `192.168.99.1/24`.
+   - Use SSH (v2) only; disable Telnet.
+2. **Control Plane Policing (CoPP)**
+   - Rate‑limit ICMP, SSH, and BGP (if used) on the router to mitigate DoS.
+3. **IPsec Hardening**
+   - Use AES‑256 encryption and SHA‑256 integrity.
+   - Rotate pre‑shared keys every 90 days; consider certificate‑based IKEv2 for production.
+4. **Logging & Monitoring**
+   - Enable syslog to a centralized server (`logging 192.168.10.250`).
+   - Configure SNMPv3 with authentication and privacy.
+5. **Patch Management**
+   - Keep IOS images up‑to‑date (`show version` → compare with Cisco security advisories).
+   - Apply Ubuntu security updates (`sudo apt-get upgrade -y`).
+6. **Least‑Privilege Access**
+   - Create role‑based admin accounts on Cisco devices (`username netadmin privilege 15 secret <strong‑pwd>`).
+   - Use `sudo` with limited NOPASSWD for `tcpdump` on Linux hosts.
+7. **Network Segmentation**
+   - In a real enterprise, move the client and server to separate VLANs and enforce inter‑VLAN routing ACLs.
+   - Example ACL to allow only HTTP/HTTPS from client to server:
+
+```cisco
+ip access-list extended CLIENT‑TO‑SERVER
+ permit tcp host 192.168.10.10 host 192.168.10.20 eq 80
+ permit tcp host 192.168.10.10 host 192.168.10.20 eq 443
+ deny ip any any
+!
+interface GigabitEthernet0/0
+ ip access-group CLIENT‑TO‑SERVER in
+```
+
+8. **Capture Hygiene**
+   - Rotate capture files (`-C 100` in `tcpdump` to limit size).
+   - Store PCAPs on a read‑only forensic share; restrict access via ACLs.
+9. **Documentation & Change Control**
+   - Keep this lab notebook version‑controlled (Git) and tag each iteration.
+   - Use configuration management tools (Ansible, Terraform) for reproducibility.
 
 ---
 
-*End of Lab.*
+*By completing this lab, students will have a concrete, hands‑on understanding of how a data unit is encapsulated at each OSI/TCP‑IP layer, how to visualize those layers with Wireshark, and how to apply production‑grade security controls to a seemingly simple network.*
