@@ -1,41 +1,51 @@
-baseURL = 'https://pages.dev'
-languageCode = 'en-us'
-title = 'Enterprise Infra & Cloud Labs'
-theme = 'PaperMod'
+baseURL = "https://pages.dev"
+languageCode = "en-us"
+title = "Enterprise Infra & Cloud Labs"
+theme = "PaperMod"
 enableRobotsTXT = true
-enableEmoji = true
-buildErrorMethods = ['404']
 
 [params]
-  description = 'Hands-on labs and deep-dive guides for CCNA, AWS, Cyber Security, and DevSecOps engineers.'
-  ShowReadingTime = true
-  ShowShareButtons = false
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
-  ShowWordCount = true
-  ShowRssButtonInSectionTermList = true
-  UseHugoToc = true
+  ShowBreadCrumbs = true
   ShowToc = true
   TocOpen = true
-  defaultTheme = 'auto'
-  disableThemeToggle = false
-  ShowFullTextinRSS = false
-  ShowPostNavLinks = true
-  ShowToc = true
-  TocOpen = true
-  comments = false
-  hidemeta = false
-  hideSummary = false
-  showtoc = true
-  tocopen = true
-  assets = [
-    { css = "css/adsense.css" }
-  ]
+  defaultTheme = "auto"
 
-  [params.label]
-    text = 'Enterprise Infra & Cloud Labs'
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
-  [params.homeInfoParams]
-    Title = 'Enterprise Infra & Cloud Labs'
-    Content = 'Hands-on labs, architecture
+[[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "archives"
+  name = "Archives"
+  url = "/archives/"
+  weight = 2
+
+[[menu.main]]
+  identifier = "search"
+  name = "Search"
+  url = "/search/"
+  weight = 3
+
+[[menu.main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 4
+
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 5
+
+[[menu.main]]
+  identifier = "privacy"
+  name = "Privacy Policy"
+  url = "/privacy-policy/"
+  weight = 6
