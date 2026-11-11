@@ -13,7 +13,7 @@
     "level": "Beginner",
     "slug": "ccna-vlans-8021q-trunking-inter-vlan-routing-lab",
     "title": "CCNA Lab 01: Configuring 802.1Q VLANs, Trunking & Router-on-a-Stick on Cisco IOS",
-    "done": false
+    "done": true
   },
   {
     "id": 3,
