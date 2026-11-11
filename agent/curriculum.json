@@ -5,7 +5,7 @@
     "level": "Beginner",
     "slug": "osi-model-tcp-ip-packet-encapsulation-lab",
     "title": "Foundations of Enterprise Networking: OSI Model, TCP/IP & Wireshark Packet Analysis Lab",
-    "done": false
+    "done": true
   },
   {
     "id": 2,
