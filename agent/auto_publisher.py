@@ -93,9 +93,9 @@ def publish_next_lab():
         max_tokens=8000
     )
 
-    msg = response.choices.message
+    msg = next(iter(response.choices)).message
     if msg.tool_calls:
-        args = json.loads(msg.tool_calls.function.arguments)
+        args = json.loads(next(iter(msg.tool_calls)).function.arguments)
         push_to_github(args["file_path"], args["content"], args["commit_message"])
         next_topic["done"] = True
         updated_json = json.dumps(curriculum, indent=2)
