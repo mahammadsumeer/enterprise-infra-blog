@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from datetime import date
 from github import Github, Auth
@@ -24,6 +25,16 @@ def push_to_github(file_path: str, content: str, commit_message: str):
         repo.create_file(file_path, commit_message, content)
         print(f"[CREATED] {file_path}")
 
+def sanitize_mermaid(text: str) -> str:
+    def fix_block(match):
+        block = match.group(0)
+        return re.sub(
+            r'([A-Za-z0-9_]+)\[([^"\]\n]+)\]',
+            lambda x: f'{x.group(1)}["{x.group(2)}"]',
+            block
+        )
+    return re.sub(r'```mermaid[\s\S]*?```', fix_block, text)
+
 def publish_next_lab():
     curriculum_path = "agent/curriculum.json"
     with open(curriculum_path, "r", encoding="utf-8") as f:
@@ -42,7 +53,9 @@ def publish_next_lab():
     system_prompt = (
         "You are a Principal Enterprise Network, Cloud, and DevSecOps Architect (CCIE, AWS SAP, CISSP, CKA). "
         "Output ONLY raw, complete Hugo Markdown starting with --- YAML frontmatter. "
-        "Do NOT wrap the response in ```markdown fences. Write at least 1,500 words of deep technical content."
+        "Do NOT wrap the response in ```markdown fences. Write at least 1,500 words of deep technical content. "
+        "CRITICAL MERMAID RULE: Always wrap every Mermaid node label in double quotes, e.g., A[\"Client VM (Ubuntu)\"] --> B[\"Router (IOS-XE)\"]. "
+        "Never leave parentheses, slashes, or colons unquoted inside [] or {}."
     )
 
     user_prompt = (
@@ -57,7 +70,7 @@ def publish_next_lab():
         f"---\n\n"
         f"Below the frontmatter, write detailed sections covering:\n"
         f"## 1. Lab Objective & Free Open-Source Prerequisites\n"
-        f"## 2. Enterprise Architecture Topology (include a ```mermaid diagram)\n"
+        f"## 2. Enterprise Architecture Topology (include a ```mermaid diagram with double-quoted node labels)\n"
         f"## 3. Addressing & Resource Inventory Table\n"
         f"## 4. Step-by-Step Configuration (complete copy-pasteable commands/code with inline comments)\n"
         f"## 5. Verification & Troubleshooting Commands (with expected terminal outputs)\n"
@@ -76,13 +89,13 @@ def publish_next_lab():
 
     markdown_content = next(iter(response.choices)).message.content.strip()
 
-    # Strip accidental outer markdown fences if present
     if markdown_content.startswith("```markdown"):
         markdown_content = markdown_content[len("```markdown"):].strip()
     if markdown_content.endswith("```"):
         markdown_content = markdown_content[:-3].strip()
 
-    # Guardrail: Refuse to publish empty or truncated articles
+    markdown_content = sanitize_mermaid(markdown_content)
+
     if len(markdown_content) < 1500 or not markdown_content.startswith("---"):
         raise ValueError(f"Generated article too short or invalid ({len(markdown_content)} chars). Aborting commit.")
 
