@@ -1,0 +1,27 @@
+name: Daily Enterprise Lab Publisher
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r agent/requirements.txt
+
+      - name: Run Principal Architect Agent
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: python agent/auto_publisher.py

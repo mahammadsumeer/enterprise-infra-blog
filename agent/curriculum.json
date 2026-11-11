@@ -1,0 +1,12 @@
+[
+  {"id": 1, "domain": "Hardware & Networking", "level": "Beginner", "slug": "osi-model-tcp-ip-packet-encapsulation-lab", "title": "Foundations of Enterprise Networking: OSI Model, TCP/IP & Wireshark Packet Analysis Lab", "done": false},
+  {"id": 2, "domain": "CCNA", "level": "Beginner", "slug": "ccna-vlans-8021q-trunking-inter-vlan-routing-lab", "title": "CCNA Lab 01: Configuring 802.1Q VLANs, Trunking & Router-on-a-Stick on Cisco IOS", "done": false},
+  {"id": 3, "domain": "CCNA", "level": "Intermediate", "slug": "ccna-ospf-multi-area-design-configuration-lab", "title": "CCNA Lab 02: Enterprise Multi-Area OSPF Design, DR/BDR Election & LSA Troubleshooting", "done": false},
+  {"id": 4, "domain": "Cyber Security", "level": "Beginner", "slug": "zero-trust-network-segmentation-iptables-ufw-lab", "title": "Cyber Security Foundations: Linux Hardening, Stateful Firewalls & Zero-Trust Segmentation Lab", "done": false},
+  {"id": 5, "domain": "Ethical Hacking", "level": "Intermediate", "slug": "ethical-hacking-nmap-enumeration-metasploit-defense-lab", "title": "Ethical Hacking Lab: Active Reconnaissance with Nmap, Vulnerability Analysis & Blue-Team Patching", "done": false},
+  {"id": 6, "domain": "AWS Solutions Architect", "level": "Intermediate", "slug": "aws-highly-available-3-tier-vpc-architecture-terraform", "title": "AWS Solutions Architect Lab: Multi-AZ 3-Tier VPC Architecture with NAT Gateways & ALB in Terraform", "done": false},
+  {"id": 7, "domain": "Azure Administrator", "level": "Intermediate", "slug": "azure-hub-spoke-vnet-peering-azure-firewall-lab", "title": "Azure Administrator Lab: Enterprise Hub-and-Spoke VNet Topology with Azure Firewall & NSGs", "done": false},
+  {"id": 8, "domain": "GCP", "level": "Intermediate", "slug": "gcp-shared-vpc-cloud-nat-private-gke-cluster-lab", "title": "GCP Cloud Architecture Lab: Designing a Shared VPC with Cloud NAT and Private GKE Clusters", "done": false},
+  {"id": 9, "domain": "DevOps", "level": "Intermediate", "slug": "devops-github-actions-docker-kubernetes-gitops-pipeline", "title": "DevOps End-to-End Lab: CI/CD Pipeline with GitHub Actions, Docker & ArgoCD on Kubernetes", "done": false},
+  {"id": 10, "domain": "DevSecOps", "level": "Expert", "slug": "devsecops-trivy-sonarqube-vault-kubernetes-policy-lab", "title": "Expert DevSecOps Lab: Automated Container Scanning (Trivy), HashiCorp Vault Secrets & OPA Gatekeeper", "done": false}
+]
