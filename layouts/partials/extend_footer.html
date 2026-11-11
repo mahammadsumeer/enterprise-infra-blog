@@ -1,0 +1,44 @@
+<!-- layouts/partials/extend_footer.html -->
+<!-- Load Mermaid.js v11 from jsDelivr CDN and render mermaid diagrams -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Mermaid without auto-start; we'll trigger rendering manually.
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: false });
+    }
+
+    function renderMermaidBlocks() {
+      const codeBlocks = document.querySelectorAll('code.language-mermaid');
+      codeBlocks.forEach(function (code) {
+        // Create a div.mermaid containing the diagram definition.
+        const mermaidDiv = document.createElement('div');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = code.textContent;
+
+        // Replace the surrounding <pre> if present, otherwise replace the <code> itself.
+        const parent = code.parentNode;
+        if (parent && parent.tagName.toLowerCase() === 'pre') {
+          parent.parentNode.replaceChild(mermaidDiv, parent);
+        } else {
+          code.parentNode.replaceChild(mermaidDiv, code);
+        }
+      });
+
+      // Trigger Mermaid to render all .mermaid elements.
+      if (window.mermaid) {
+        mermaid.run();
+      }
+    }
+
+    // If Mermaid script has already loaded, render immediately; otherwise wait for load event.
+    if (window.mermaid && typeof mermaid.run === 'function') {
+      renderMermaidBlocks();
+    } else {
+      const mermaidScript = document.querySelector('script[src*="mermaid@11"]');
+      if (mermaidScript) {
+        mermaidScript.addEventListener('load', renderMermaidBlocks);
+      }
+    }
+  });
+</script>
