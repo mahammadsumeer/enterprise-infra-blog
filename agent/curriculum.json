@@ -29,7 +29,7 @@
     "level": "Beginner",
     "slug": "zero-trust-network-segmentation-iptables-ufw-lab",
     "title": "Cyber Security Foundations: Linux Hardening, Stateful Firewalls & Zero-Trust Segmentation Lab",
-    "done": false
+    "done": true
   },
   {
     "id": 5,
