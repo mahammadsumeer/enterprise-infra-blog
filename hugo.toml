@@ -1,4 +1,4 @@
-baseURL = "https://pages.dev"
+baseURL = "https://enterprise-infra-blog.pages.dev/"
 languageCode = "en-us"
 title = "Enterprise Infra & Cloud Labs"
 theme = "PaperMod"
