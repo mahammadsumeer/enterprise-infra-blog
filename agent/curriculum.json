@@ -45,7 +45,7 @@
     "level": "Intermediate",
     "slug": "aws-highly-available-3-tier-vpc-architecture-terraform",
     "title": "AWS Solutions Architect Lab: Multi-AZ 3-Tier VPC Architecture with NAT Gateways & ALB in Terraform",
-    "done": false
+    "done": true
   },
   {
     "id": 7,
