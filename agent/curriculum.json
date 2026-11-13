@@ -53,7 +53,7 @@
     "level": "Intermediate",
     "slug": "azure-hub-spoke-vnet-peering-azure-firewall-lab",
     "title": "Azure Administrator Lab: Enterprise Hub-and-Spoke VNet Topology with Azure Firewall & NSGs",
-    "done": false
+    "done": true
   },
   {
     "id": 8,
