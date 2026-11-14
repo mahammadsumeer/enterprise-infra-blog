@@ -61,7 +61,7 @@
     "level": "Intermediate",
     "slug": "gcp-shared-vpc-cloud-nat-private-gke-cluster-lab",
     "title": "GCP Cloud Architecture Lab: Designing a Shared VPC with Cloud NAT and Private GKE Clusters",
-    "done": false
+    "done": true
   },
   {
     "id": 9,
