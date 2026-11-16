@@ -77,6 +77,6 @@
     "level": "Expert",
     "slug": "devsecops-trivy-sonarqube-vault-kubernetes-policy-lab",
     "title": "Expert DevSecOps Lab: Automated Container Scanning (Trivy), HashiCorp Vault Secrets & OPA Gatekeeper",
-    "done": false
+    "done": true
   }
 ]
