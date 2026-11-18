@@ -59,7 +59,7 @@ def generate_architecture_png(slug: str, title: str, domain: str, post_summary: 
         model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.1,
-        max_tokens=1800
+        max_tokens=4000
     )
     code = next(iter(resp.choices)).message.content.strip()
     if code.startswith("```python"):
