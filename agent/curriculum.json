@@ -78,5 +78,85 @@
     "slug": "devsecops-trivy-sonarqube-vault-kubernetes-policy-lab",
     "title": "Expert DevSecOps Lab: Automated Container Scanning (Trivy), HashiCorp Vault Secrets & OPA Gatekeeper",
     "done": true
+  },
+  {
+    "id": 11,
+    "domain": "Hardware & Networking",
+    "level": "Beginner",
+    "slug": "hardware-cable-testing-tester-lab",
+    "title": "Hardware Lab: Cable Testing, Continuity, and TDR Analysis with Fluke Tester",
+    "done": false
+  },
+  {
+    "id": 12,
+    "domain": "CCNA",
+    "level": "Intermediate",
+    "slug": "ccna-eigrp-advanced-routing-lab",
+    "title": "CCNA Lab: Implementing EIGRP Advanced Features, Stub Routing, and Route Summarization",
+    "done": false
+  },
+  {
+    "id": 13,
+    "domain": "CCNA",
+    "level": "Expert",
+    "slug": "ccna-advanced-bgp-mpls-lab",
+    "title": "CCNA Expert Lab: BGP Confederations, MPLS L2VPN, and Route Reflectors",
+    "done": false
+  },
+  {
+    "id": 14,
+    "domain": "Cyber Security",
+    "level": "Beginner",
+    "slug": "cybersecurity-ldap-enumeration-defense-lab",
+    "title": "Cyber Security Lab: LDAP Enumeration, Injection, and Hardening with TLS",
+    "done": false
+  },
+  {
+    "id": 15,
+    "domain": "Ethical Hacking",
+    "level": "Expert",
+    "slug": "ethical-hacking-advanced-payloads-metasploit-evading-av-lab",
+    "title": "Ethical Hacking Lab: Crafting Advanced Metasploit Payloads, AV Evasion, and Post-Exploitation",
+    "done": false
+  },
+  {
+    "id": 16,
+    "domain": "AWS Solutions Architect",
+    "level": "Beginner",
+    "slug": "aws-s3-static-website-cloudfront-lab",
+    "title": "AWS Lab: Deploying a Secure Static Website on S3 with CloudFront and WAF",
+    "done": false
+  },
+  {
+    "id": 17,
+    "domain": "Azure Administrator",
+    "level": "Expert",
+    "slug": "azure-aks-azure-policy-azure-key-vault-ci-cd-lab",
+    "title": "Azure Lab: Secure AKS Deployment with Azure Policy, Key Vault Integration, and CI/CD",
+    "done": false
+  },
+  {
+    "id": 18,
+    "domain": "GCP",
+    "level": "Beginner",
+    "slug": "gcp-cloud-functions-ci-cd-cloud-build-lab",
+    "title": "GCP Lab: Building Serverless Cloud Functions with Cloud Build and IAM Best Practices",
+    "done": false
+  },
+  {
+    "id": 19,
+    "domain": "DevOps",
+    "level": "Expert",
+    "slug": "devops-terraform-ansible-k8s-helm-gitops-lab",
+    "title": "DevOps Lab: Full Infrastructure as Code with Terraform, Ansible, Helm, and GitOps",
+    "done": false
+  },
+  {
+    "id": 20,
+    "domain": "DevSecOps",
+    "level": "Intermediate",
+    "slug": "devsecops-ci-sast-dast-container-scanning-lab",
+    "title": "DevSecOps Lab: Integrating SAST, DAST, and Container Scanning into CI Pipelines",
+    "done": false
   }
 ]
