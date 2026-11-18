@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<lab name="Foundations of Enterprise Networking: OSI Model, TCP/IP & Wireshark Packet Analysis Lab" id="44843aa9-e626-40d1-9528-9135b1df54c6" version="1" scripttimeout="300" lock="0">
+<lab name="Osi Model Tcp Ip Packet Encapsulation Lab" id="a31d50a6-b550-4639-a5c5-64d91ca69542" version="1" scripttimeout="300" lock="0">
   <topology>
     <nodes>
-      <node id="1" name="Core-RTR-01" type="iol" template="iol" image="i86bi_linux_l3-adventerprisek9-ms.M" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="240" top="140"/>
-      <node id="2" name="Dist-SW-01" type="iol" template="iol" image="i86bi_linux_l2-adventerprisek9-ms.SSA" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="140" top="280"/>
-      <node id="3" name="Dist-SW-02" type="iol" template="iol" image="i86bi_linux_l2-adventerprisek9-ms.SSA" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="360" top="280"/>
-      <node id="4" name="Edge-FW-01" type="qemu" template="pfsense" image="pfsense-CE-2.7" ethernet="4" console="vnc" cpu="1" ram="1024" left="240" top="40"/>
+      <node id="1" name="R1" type="iol" template="iol" image="i86bi_linux_l3-adventerprisek9-ms.M" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="240" top="140"/>
+      <node id="2" name="R2" type="iol" template="iol" image="i86bi_linux_l3-adventerprisek9-ms.M" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="420" top="80"/>
+      <node id="3" name="R3" type="iol" template="iol" image="i86bi_linux_l3-adventerprisek9-ms.M" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="420" top="200"/>
+      <node id="4" name="SW1" type="iol" template="iol" image="i86bi_linux_l2-adventerprisek9-ms.SSA" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="120" top="140"/>
     </nodes>
     <networks>
-      <network id="1" type="bridge" name="Net-Core-Edge" left="240" top="90" visibility="0"/>
-      <network id="2" type="bridge" name="Net-Core-SW1" left="190" top="210" visibility="0"/>
-      <network id="3" type="bridge" name="Net-Core-SW2" left="300" top="210" visibility="0"/>
+      <network id="1" type="bridge" name="10.1.0.0/16" left="180" top="140" visibility="0"/>
+      <network id="2" type="bridge" name="10.2.0.0/16" left="330" top="110" visibility="0"/>
+      <network id="3" type="bridge" name="10.3.0.0/16" left="330" top="170" visibility="0"/>
     </networks>
   </topology>
 </lab>
