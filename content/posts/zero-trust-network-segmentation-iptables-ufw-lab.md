@@ -39,6 +39,10 @@ By the end of the lab you will have a **fully functional, reproducible environme
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/zero-trust-network-segmentation-iptables-ufw-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The following diagram visualises the **Zero‑Trust Segmented Network** we will build. It consists of three logical zones:
 
 1. **DMZ Zone** – Public‑facing services (NGINX, SSH).  

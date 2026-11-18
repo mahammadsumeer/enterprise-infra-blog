@@ -35,6 +35,10 @@ By the end of the lab you will have a repeatable, auditable process that can be 
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/hardware-cable-testing-tester-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The following diagram illustrates a simplified campus core‑distribution‑access architecture that will be used for the cable‑testing lab. All copper and fiber runs are labeled with the intended **category**, **length**, and **expected performance**. The diagram is rendered with **Mermaid**; every node label is wrapped in double quotes as required.
 
 ```mermaid

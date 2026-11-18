@@ -45,6 +45,10 @@ By the end of the lab you will be able to:
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/azure-hub-spoke-vnet-peering-azure-firewall-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 Below is a high‑level logical diagram of the Hub‑and‑Spoke topology. All node labels are wrapped in double quotes as required by the Mermaid rule.
 
 ```mermaid

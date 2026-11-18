@@ -52,6 +52,10 @@ If you do not have organization‑level rights, you can run the lab in a **singl
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/gcp-shared-vpc-cloud-nat-private-gke-cluster-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The diagram below visualises the final topology. All node labels are **double‑quoted** as required by the Mermaid rule.
 
 ```mermaid

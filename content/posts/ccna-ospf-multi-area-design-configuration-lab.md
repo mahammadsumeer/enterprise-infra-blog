@@ -40,6 +40,10 @@ The purpose of this lab is to give candidates hands‑on experience with a **mul
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/ccna-ospf-multi-area-design-configuration-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The topology models a **core‑distribution‑access** hierarchy with three OSPF areas:
 
 - **Area 0 (Backbone):** Core routers `R1` and `R2`.

@@ -45,6 +45,10 @@ By the end of the lab you will have a **fully functional CI pipeline** (GitHub A
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/devsecops-trivy-sonarqube-vault-kubernetes-policy-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The diagram below visualises the logical flow of artifacts and control planes in the lab. It is deliberately kept simple yet mirrors a typical enterprise DevSecOps stack.
 
 ```mermaid

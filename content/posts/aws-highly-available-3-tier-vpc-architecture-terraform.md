@@ -50,6 +50,10 @@ Create an IAM policy (or attach the managed policy `AdministratorAccess` for a s
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/aws-highly-available-3-tier-vpc-architecture-terraform.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 Below is a **Mermaid** diagram that visualises the full three‑tier architecture. Every node label is wrapped in double quotes as required by the “CRITICAL MERMAID RULE”.
 
 ```mermaid

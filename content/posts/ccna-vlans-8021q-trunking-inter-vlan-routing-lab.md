@@ -40,6 +40,10 @@ All of the above are free for personal and educational use. If you prefer a clou
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/ccna-vlans-8021q-trunking-inter-vlan-routing-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The following diagram models a classic “router‑on‑a‑stick” scenario. The switch is a Catalyst‑2960‑style L2 device, the router is an ISR‑4321‑style ISR, and three VPCS act as end‑hosts.
 
 ```mermaid

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lab name="Hardware Lab: Cable Testing, Continuity, and TDR Analysis with Fluke Tester" id="b478511f-680e-4692-933e-39b0a2a0a358" version="1" scripttimeout="300" lock="0">
+  <topology>
+    <nodes>
+      <node id="1" name="Core-RTR-01" type="iol" template="iol" image="i86bi_linux_l3-adventerprisek9-ms.M" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="240" top="140"/>
+      <node id="2" name="Dist-SW-01" type="iol" template="iol" image="i86bi_linux_l2-adventerprisek9-ms.SSA" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="140" top="280"/>
+      <node id="3" name="Dist-SW-02" type="iol" template="iol" image="i86bi_linux_l2-adventerprisek9-ms.SSA" ethernet="4" serial="0" console="telnet" cpu="1" ram="512" left="360" top="280"/>
+      <node id="4" name="Edge-FW-01" type="qemu" template="pfsense" image="pfsense-CE-2.7" ethernet="4" console="vnc" cpu="1" ram="1024" left="240" top="40"/>
+    </nodes>
+    <networks>
+      <network id="1" type="bridge" name="Net-Core-Edge" left="240" top="90" visibility="0"/>
+      <network id="2" type="bridge" name="Net-Core-SW1" left="190" top="210" visibility="0"/>
+      <network id="3" type="bridge" name="Net-Core-SW2" left="300" top="210" visibility="0"/>
+    </networks>
+  </topology>
+</lab>

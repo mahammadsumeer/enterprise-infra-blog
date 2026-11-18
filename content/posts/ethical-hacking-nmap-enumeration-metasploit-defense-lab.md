@@ -42,6 +42,10 @@ By the end of the lab, participants will have a reproducible, production‑grade
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/ethical-hacking-nmap-enumeration-metasploit-defense-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The following diagram models a **three‑zone** enterprise network:
 
 * **DMZ** – Public‑facing web tier (Apache, Nginx, and a vulnerable WordPress instance).

@@ -43,6 +43,10 @@ All tools used are community‑maintained, run on commodity hardware (or virtual
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/osi-model-tcp-ip-packet-encapsulation-lab.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The lab mimics a **small‑to‑medium enterprise (SME) edge‑to‑core** network. It contains:
 
 * **Client VLAN (10.0.10.0/24)** – two Ubuntu workstations.

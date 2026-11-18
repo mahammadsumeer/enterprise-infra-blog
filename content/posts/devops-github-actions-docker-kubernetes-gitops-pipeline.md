@@ -51,6 +51,10 @@ By the end of the lab you will have:
 
 ## 2. Enterprise Architecture Topology
 
+
+> **📥 Hands-On Lab Topology File:** [Download EVE-NG `.unl` Lab File](/labs/devops-github-actions-docker-kubernetes-gitops-pipeline.unl) *(Import directly into EVE-NG Community Edition)*
+
+
 The diagram below visualises the logical flow of artifacts and control planes across the environment. It is deliberately kept simple for readability, yet it mirrors a typical enterprise DevSecOps topology.
 
 ```mermaid
