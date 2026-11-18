@@ -31,7 +31,7 @@ def generate_architecture_png(slug: str, title: str, domain: str, post_summary: 
             "EVE-NG NETWORK TOPOLOGY STYLE:\n"
             "- Set `graph_attr = {\"bgcolor\": \"#F8FAFC\", \"splines\": \"line\", \"rankdir\": \"LR\", \"nodesep\": \"1.1\", \"ranksep\": \"1.4\", \"fontname\": \"Arial\"}`\n"
             "- Set `edge_attr = {\"color\": \"#2B6CB0\", \"penwidth\": \"1.8\", \"fontsize\": \"10\", \"fontcolor\": \"#1A202C\"}`\n"
-            "- Import Cisco icons from `diagrams.cisco.router` (Router) and `diagrams.cisco.switch` (Layer2Switch, Layer3Switch) or `diagrams.cisco.security` (Firewall).\n"
+            "- Import Cisco icons ONLY from `diagrams.generic.network` (`Router`, `Switch`, `Firewall`) and `diagrams.onprem.compute` (`Server`).\n"
             "- Label nodes cleanly like `R1`, `R2`, `SW1`, `FW1`.\n"
             "- Use `Edge(label=\"10.2.0.0/16\", headlabel=\".2 (e0/0)\", taillabel=\".1 (e0/1)\")` so interface names and IP subnets appear on links just like EVE-NG."
         )
