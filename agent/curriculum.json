@@ -109,7 +109,7 @@
     "level": "Beginner",
     "slug": "cybersecurity-ldap-enumeration-defense-lab",
     "title": "Cyber Security Lab: LDAP Enumeration, Injection, and Hardening with TLS",
-    "done": false
+    "done": true
   },
   {
     "id": 15,
