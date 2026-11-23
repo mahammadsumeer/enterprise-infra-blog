@@ -125,7 +125,7 @@
     "level": "Beginner",
     "slug": "aws-s3-static-website-cloudfront-lab",
     "title": "AWS Lab: Deploying a Secure Static Website on S3 with CloudFront and WAF",
-    "done": false
+    "done": true
   },
   {
     "id": 17,
