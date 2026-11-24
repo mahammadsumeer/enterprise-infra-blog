@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1250" viewBox="0 0 1800 1250" role="img" aria-labelledby="title desc">
+<title id="title">Azure secure AKS architecture with Azure Policy, Key Vault and GitHub Actions CI/CD</title>
+<desc id="desc">Architecture based on the linked lab: GitHub Actions builds and pushes images to Azure Container Registry; Flux reconciles manifests into a private AKS cluster; AKS workloads retrieve secrets from Key Vault through the Secrets Store CSI provider; Azure Policy governs the cluster; Azure Monitor sends telemetry to Log Analytics.</desc>
+<defs>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#526579"/></marker>
+  <marker id="blueArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#0078D4"/></marker>
+  <marker id="greenArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#107C41"/></marker>
+  <style>
+    text{font-family:"Segoe UI",Arial,sans-serif;fill:#172B4D}
+    .h1{font-size:30px;font-weight:700}.sub{font-size:15px;fill:#526579}
+    .boundary{fill:#F7FBFF;stroke:#0078D4;stroke-width:3}
+    .rg{fill:#EDF6FC;stroke:#4A9BD6;stroke-width:2;stroke-dasharray:9 6}
+    .vnet{fill:#F1F8FD;stroke:#2586C8;stroke-width:2.5}
+    .subnet{fill:#FFFFFF;stroke:#7AAFD4;stroke-width:2;stroke-dasharray:6 4}
+    .tile{fill:#FFFFFF;stroke:#9CB7C9;stroke-width:1.8}
+    .azure{fill:#0078D4}.green{fill:#107C41}.purple{fill:#6B55A3}.orange{fill:#C66A12}
+    .label{font-size:17px;font-weight:700}.small{font-size:14px;fill:#42566B}.tiny{font-size:12px;fill:#526579}
+    .flow{fill:none;stroke:#526579;stroke-width:2.8;marker-end:url(#arrow)}
+    .flowblue{fill:none;stroke:#0078D4;stroke-width:3;marker-end:url(#blueArrow)}
+    .flowgreen{fill:none;stroke:#107C41;stroke-width:3;marker-end:url(#greenArrow)}
+    .govern{fill:none;stroke:#6B55A3;stroke-width:2.5;stroke-dasharray:8 6}
+    .telemetry{fill:none;stroke:#C66A12;stroke-width:2.5;stroke-dasharray:7 5;marker-end:url(#arrow)}
+    .tag{font-size:12px;font-weight:700;fill:#fff}
+  </style>
+</defs>
+<rect width="1800" height="1250" fill="#FFFFFF"/>
+<text x="60" y="58" class="h1">Secure Azure Kubernetes Service (AKS) — Reference Lab Architecture</text>
+<text x="60" y="88" class="sub">Azure Policy • Key Vault CSI integration • GitHub Actions CI/CD • Flux v2 GitOps • Azure Monitor</text>
+
+<!-- External engineering / CI domain -->
+<rect x="60" y="135" width="380" height="355" rx="18" fill="#F8F6FC" stroke="#8B78B8" stroke-width="2.5"/>
+<text x="85" y="172" class="label">SOURCE CONTROL &amp; CI/CD</text>
+<rect x="90" y="205" width="145" height="105" rx="12" class="tile"/>
+<circle cx="162" cy="235" r="18" fill="#24292F"/>
+<path d="M153 235 Q162 220 171 235 L168 246 L156 246 Z" fill="#fff"/>
+<text x="162" y="275" text-anchor="middle" class="label">GitHub</text>
+<text x="162" y="296" text-anchor="middle" class="tiny">infra-bicep repo</text>
+<rect x="255" y="205" width="155" height="105" rx="12" class="tile"/>
+<circle cx="332" cy="235" r="18" fill="#24292F"/>
+<path d="M323 235 Q332 220 341 235 L338 246 L326 246 Z" fill="#fff"/>
+<text x="332" y="275" text-anchor="middle" class="label">GitHub</text>
+<text x="332" y="296" text-anchor="middle" class="tiny">app-manifests repo</text>
+<rect x="145" y="365" width="210" height="90" rx="12" fill="#FFFFFF" stroke="#8B78B8" stroke-width="2"/>
+<rect x="163" y="385" width="38" height="30" rx="5" fill="#6B55A3"/>
+<path d="M171 400 h22 M182 391 v18" stroke="#fff" stroke-width="2"/>
+<text x="250" y="397" text-anchor="middle" class="label">GitHub Actions</text>
+<text x="250" y="422" text-anchor="middle" class="small">Build • scan • push image</text>
+<text x="250" y="442" text-anchor="middle" class="tiny">Azure login via workload identity / SP</text>
+
+<!-- Azure subscription and RG -->
+<rect x="475" y="125" width="1270" height="1035" rx="24" class="boundary"/>
+<text x="510" y="165" class="label" fill="#0078D4">AZURE SUBSCRIPTION</text>
+<rect x="510" y="190" width="1200" height="925" rx="18" class="rg"/>
+<text x="540" y="228" class="label">Resource Group: rg-secure-aks</text>
+
+<!-- VNet and subnets -->
+<rect x="550" y="260" width="1120" height="700" rx="18" class="vnet"/>
+<text x="580" y="298" class="label">Virtual Network: vnet-secure-aks  |  10.0.0.0/16</text>
+<rect x="580" y="325" width="745" height="595" rx="14" class="subnet"/>
+<text x="605" y="360" class="label">Subnet: snet-aks  |  10.0.0.0/22</text>
+<rect x="1350" y="325" width="285" height="155" rx="14" class="subnet"/>
+<text x="1375" y="360" class="label">Subnet: snet-gateway</text>
+<text x="1375" y="386" class="small">10.0.4.0/24</text>
+<text x="1375" y="425" class="tiny">Reserved / optional</text>
+<text x="1375" y="446" class="tiny">Firewall or NAT Gateway</text>
+
+<!-- AKS cluster -->
+<rect x="625" y="395" width="650" height="470" rx="18" fill="#EAF4FC" stroke="#0078D4" stroke-width="3"/>
+<rect x="650" y="415" width="600" height="55" rx="10" fill="#0078D4"/>
+<text x="950" y="449" text-anchor="middle" font-size="22" font-weight="700" fill="#FFFFFF">Azure Kubernetes Service — aks-secure</text>
+<text x="950" y="493" text-anchor="middle" class="small">Private API server • Azure CNI • Azure RBAC</text>
+<rect x="680" y="515" width="250" height="115" rx="12" class="tile"/>
+<rect x="700" y="535" width="34" height="34" rx="5" fill="#0078D4"/>
+<path d="M707 545 h20 M707 552 h20 M707 559 h20" stroke="#fff" stroke-width="2"/>
+<text x="805" y="551" text-anchor="middle" class="label">Node pool</text>
+<text x="805" y="577" text-anchor="middle" class="small">nodepool1 • VMSS</text>
+<text x="805" y="600" text-anchor="middle" class="tiny">2 × Standard_D2s_v3</text>
+<rect x="960" y="515" width="265" height="115" rx="12" class="tile"/>
+<circle cx="990" cy="550" r="18" fill="#0078D4"/>
+<path d="M980 550 h20 M990 540 v20" stroke="#fff" stroke-width="2"/>
+<text x="1100" y="551" text-anchor="middle" class="label">Flux v2</text>
+<text x="1100" y="577" text-anchor="middle" class="small">flux-system namespace</text>
+<text x="1100" y="600" text-anchor="middle" class="tiny">GitRepository • Kustomization • HelmRelease</text>
+<rect x="680" y="675" width="250" height="135" rx="12" class="tile"/>
+<rect x="700" y="696" width="34" height="34" rx="6" fill="#107C41"/>
+<circle cx="717" cy="713" r="8" fill="#fff"/>
+<text x="805" y="710" text-anchor="middle" class="label">Frontend pods</text>
+<text x="805" y="738" text-anchor="middle" class="small">app-frontend</text>
+<text x="805" y="763" text-anchor="middle" class="tiny">2 replicas • image from ACR</text>
+<text x="805" y="786" text-anchor="middle" class="tiny">CSI-mounted secrets</text>
+<rect x="960" y="675" width="265" height="135" rx="12" class="tile"/>
+<rect x="980" y="696" width="34" height="34" rx="6" fill="#107C41"/>
+<circle cx="997" cy="713" r="8" fill="#fff"/>
+<text x="1100" y="710" text-anchor="middle" class="label">Backend pods</text>
+<text x="1100" y="738" text-anchor="middle" class="small">app-backend</text>
+<text x="1100" y="763" text-anchor="middle" class="tiny">Workload image from ACR</text>
+<text x="1100" y="786" text-anchor="middle" class="tiny">CSI-mounted secrets</text>
+<rect x="790" y="825" width="330" height="28" rx="8" fill="#D9EAF7"/>
+<text x="955" y="844" text-anchor="middle" class="tiny">Private AKS API endpoint (private DNS / VNet access)</text>
+
+<!-- Azure managed services -->
+<rect x="1360" y="520" width="275" height="110" rx="12" class="tile"/>
+<rect x="1380" y="542" width="42" height="42" rx="7" fill="#0078D4"/>
+<path d="M1390 552 h22 v22 h-22 Z M1395 557 h12 v12 h-12 Z" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="1505" y="555" text-anchor="middle" class="label">Azure Key Vault</text>
+<text x="1505" y="582" text-anchor="middle" class="small">kv-secure-aks</text>
+<text x="1505" y="605" text-anchor="middle" class="tiny">TLS certs • DB passwords • API keys</text>
+
+<rect x="1360" y="665" width="275" height="110" rx="12" class="tile"/>
+<rect x="1380" y="687" width="42" height="42" rx="7" fill="#0078D4"/>
+<path d="M1388 698 h26 M1388 706 h26 M1388 714 h26" stroke="#fff" stroke-width="3"/>
+<text x="1505" y="700" text-anchor="middle" class="label">Container Registry</text>
+<text x="1505" y="727" text-anchor="middle" class="small">ACR: acrsecureaks</text>
+<text x="1505" y="750" text-anchor="middle" class="tiny">acrsecureaks.azurecr.io</text>
+
+<rect x="1360" y="815" width="275" height="105" rx="12" class="tile"/>
+<rect x="1380" y="836" width="42" height="42" rx="7" fill="#C66A12"/>
+<path d="M1388 866 L1397 850 L1405 860 L1415 842" fill="none" stroke="#fff" stroke-width="2.5"/>
+<text x="1505" y="850" text-anchor="middle" class="label">Azure Monitor</text>
+<text x="1505" y="876" text-anchor="middle" class="small">Container insights</text>
+<text x="1505" y="899" text-anchor="middle" class="tiny">Log Analytics: law-secure-aks</text>
+
+<!-- Governance outside VNet but in RG -->
+<rect x="545" y="985" width="350" height="95" rx="12" class="tile"/>
+<circle cx="585" cy="1032" r="22" fill="#6B55A3"/>
+<path d="M585 1018 L600 1024 V1036 Q595 1048 585 1053 Q575 1048 570 1036 V1024 Z" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="730" y="1023" text-anchor="middle" class="label">Azure Policy</text>
+<text x="730" y="1048" text-anchor="middle" class="small">Pod security • allowed registries</text>
+<text x="730" y="1068" text-anchor="middle" class="tiny">Cluster / resource-group assignments</text>
+<rect x="940" y="985" width="330" height="95" rx="12" class="tile"/>
+<circle cx="980" cy="1032" r="22" fill="#0078D4"/>
+<path d="M970 1032 h20 M980 1022 v20" stroke="#fff" stroke-width="3"/>
+<text x="1110" y="1023" text-anchor="middle" class="label">Microsoft Defender</text>
+<text x="1110" y="1048" text-anchor="middle" class="small">Defender for Cloud</text>
+<text x="1110" y="1068" text-anchor="middle" class="tiny">Kubernetes security posture</text>
+
+<!-- Flows -->
+<path d="M235 257 H255" class="flow"/>
+<path d="M332 310 V340 H250 V365" class="flowblue"/>
+<text x="365" y="335" class="tiny">Workflow trigger</text>
+<path d="M355 410 H430 V720 H1360" class="flowblue"/>
+<text x="455" y="705" class="small">1  Build &amp; push container image</text>
+<path d="M332 310 V325 H1190 V515" class="govern"/>
+<text x="865" y="318" class="tiny">2  GitOps source monitored by Flux</text>
+<path d="M960 570 H930 V742 H930" class="flowgreen"/>
+<path d="M1090 630 V675" class="flowgreen"/>
+<text x="1130" y="652" class="tiny">3  Reconcile manifests</text>
+<path d="M1360 720 H1290 V740 H1225" class="flowblue"/>
+<text x="1280" y="700" class="tiny">4  Pull image</text>
+<path d="M1360 575 H1310 V780 H1225" class="flowgreen"/>
+<text x="1280" y="795" class="tiny">5  CSI secret retrieval</text>
+<path d="M1225 755 H1300 V610 H1360" class="flowgreen" opacity="0"/>
+<path d="M1110 810 V865 H1495 V815" class="telemetry"/>
+<text x="1280" y="855" class="tiny">6  Logs &amp; metrics</text>
+<path d="M720 985 V945 H750 V865" class="govern"/>
+<path d="M1110 985 V955 H1180 V865" class="govern"/>
+<text x="915" y="948" class="tiny">Policy evaluation / compliance</text>
+
+<!-- Flow legend and caveats -->
+<rect x="60" y="535" width="380" height="575" rx="16" fill="#FBFCFE" stroke="#C7D3DE" stroke-width="1.5"/>
+<text x="88" y="575" class="label">Deployment &amp; runtime flow</text>
+<g class="small">
+ <text x="90" y="620">1. GitHub Actions builds and pushes</text><text x="110" y="642">the container image to ACR.</text>
+ <text x="90" y="680">2. Flux watches app-manifests for</text><text x="110" y="702">desired-state changes.</text>
+ <text x="90" y="740">3. Flux applies manifests / HelmRelease</text><text x="110" y="762">and rolls out workloads to AKS.</text>
+ <text x="90" y="800">4. AKS nodes pull approved images</text><text x="110" y="822">from Azure Container Registry.</text>
+ <text x="90" y="860">5. CSI driver + Azure provider fetch</text><text x="110" y="882">secrets from Key Vault into pod volumes.</text>
+ <text x="90" y="920">6. Container Insights sends telemetry</text><text x="110" y="942">to the Log Analytics workspace.</text>
+</g>
+<line x1="90" y1="978" x2="145" y2="978" class="flowblue"/><text x="160" y="983" class="tiny">Data / deployment flow</text>
+<line x1="90" y1="1015" x2="145" y2="1015" class="govern"/><text x="160" y="1020" class="tiny">Governance / policy relationship</text>
+<line x1="90" y1="1052" x2="145" y2="1052" class="telemetry"/><text x="160" y="1057" class="tiny">Monitoring telemetry</text>
+<text x="88" y="1090" class="tiny">Conceptual logical architecture; not a live deployment.</text>
+
+<text x="60" y="1195" class="tiny">Source: Enterprise Infra &amp; Cloud Labs — “Azure Lab: Secure AKS Deployment with Azure Policy, Key Vault Integration, and CI/CD” (24 Nov 2026).</text>
+<text x="60" y="1218" class="tiny">Design note: the article's sample Bicep leaves ACR and Key Vault public network access allowed; private endpoints / private DNS and full egress controls are not shown as deployed.</text>
+</svg>
