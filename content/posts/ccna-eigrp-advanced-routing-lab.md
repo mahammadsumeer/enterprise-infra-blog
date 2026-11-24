@@ -39,20 +39,7 @@ All of the above are **free** or **community‑licensed** and run on Windows, ma
 
 The topology mimics a small‑to‑medium enterprise with three sites (HQ, Branch‑1, Branch‑2) interconnected via a **hub‑and‑spoke** WAN. Each site contains a **core router** (EIGRP enabled) and a **distribution switch** that hosts LAN hosts. The HQ core also runs **EIGRP stub** to limit the advertisement of internal subnets to the WAN.
 
-```mermaid
-graph LR
-    A["HQ Core Router (R1)"] --> B["HQ Distribution Switch (SW1)"]
-    B --> C["HQ LAN Host 1 (PC1)"]
-    B --> D["HQ LAN Host 2 (PC2)"]
-    A --> E["WAN Link to Branch‑1 (Serial0/0)"]
-    A --> F["WAN Link to Branch‑2 (Serial0/1)"]
-    G["Branch‑1 Core Router (R2)"] --> H["Branch‑1 Distribution Switch (SW2)"]
-    H --> I["Branch‑1 LAN Host (PC3)"]
-    G --> E
-    J["Branch‑2 Core Router (R3)"] --> K["Branch‑2 Distribution Switch (SW3)"]
-    K --> L["Branch‑2 LAN Host (PC4)"]
-    J --> F
-```
+![Enterprise Architecture Topology](/images/eigrp-advanced-lab-topology.svg)
 
 **Key points of the diagram:**
 
