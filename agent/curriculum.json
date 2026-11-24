@@ -133,7 +133,7 @@
     "level": "Expert",
     "slug": "azure-aks-azure-policy-azure-key-vault-ci-cd-lab",
     "title": "Azure Lab: Secure AKS Deployment with Azure Policy, Key Vault Integration, and CI/CD",
-    "done": false
+    "done": true
   },
   {
     "id": 18,
