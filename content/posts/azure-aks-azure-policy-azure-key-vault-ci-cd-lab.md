@@ -43,32 +43,7 @@ By the end of the lab you will have a **repeatable IaC blueprint** (Bicep) that 
 
 The diagram below illustrates the logical components that will be created. All traffic stays within a **single Azure Virtual Network (VNet)**, and the AKS control plane is **private‑endpoint only**.
 
-```mermaid
-graph TD
-    subgraph "Azure Subscription"
-        subgraph "Resource Group: rg‑secure‑aks"
-            A["VNet (10.0.0.0/16)"] --> B["Subnet‑AKS (10.0.0.0/22)"]
-            A --> C["Subnet‑Gateway (10.0.4.0/24)"]
-            B --> D["AKS Cluster (private API)"]
-            D --> E["Node Pool (VMSS)"]
-            D --> F["Azure Policy Add‑On"]
-            D --> G["Flux v2 GitOps Operator"]
-            D --> H["Azure Monitor (Log Analytics)"]
-            D --> I["Azure Key Vault (kv‑secure‑aks)"]
-            I --> J["Secrets Store CSI Driver"]
-            J --> K["Pod A (app‑frontend)"]
-            J --> L["Pod B (app‑backend)"]
-            subgraph "GitHub"
-                M["GitHub Repo (infra‑bicep)"]
-                N["GitHub Repo (app‑manifests)"]
-                O["GitHub Actions Runner"]
-            end
-            O --> P["ACR (acrsecureaks)"]
-            P --> K
-            P --> L
-        end
-    end
-```
+![Enterprise Architecture Topology](/images/azure-secure-aks-topology.svg)
 
 **Key points of the topology**
 
