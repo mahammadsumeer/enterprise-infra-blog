@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1320" viewBox="0 0 1900 1320" role="img" aria-labelledby="title desc">
+<title id="title">Lab: Ethical Hacking — Metasploit Detection and Enterprise Network Segmentation</title>
+<desc id="desc">EVE-NG topology with pfSense perimeter firewall, isolated simulated WAN, DMZ Ubuntu web and mail servers, internal Windows Active Directory DNS DHCP, file server and workstation, management ELK SIEM and Kali SOC workstation. All networks are isolated; diagram is for defensive telemetry and controlled validation, not AV evasion or post-exploitation instructions.</desc>
+<defs>
+ <marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11Z" fill="#526579"/></marker>
+ <marker id="blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L11 6 L1 11Z" fill="#0078D4"/></marker>
+ <style>
+ text{font-family:"Segoe UI",Arial,sans-serif;fill:#172B4D}.title{font-size:30px;font-weight:700}.sub{font-size:15px;fill:#526579}.head{font-size:19px;font-weight:700}.node{fill:#fff;stroke:#8098AD;stroke-width:2}.zone{fill:#F5F9FC;stroke:#2586C8;stroke-width:2.5}.dmz{fill:#FFF5FC;stroke:#B85AA0;stroke-width:2.5}.internal{fill:#F1F4FF;stroke:#6277C8;stroke-width:2.5}.mgmt{fill:#F1FAF2;stroke:#3C9B60;stroke-width:2.5}.test{fill:#FFF9EF;stroke:#C58A32;stroke-width:2.5}.small{font-size:14px;fill:#42566B}.tiny{font-size:12px;fill:#526579}.ip{font-size:14px;font-weight:700;fill:#0078D4}.wire{fill:none;stroke:#526579;stroke-width:3;marker-end:url(#arr)}.mon{fill:none;stroke:#107C41;stroke-width:2.7;stroke-dasharray:8 5;marker-end:url(#blue)}.chip{font-size:12px;font-weight:700;fill:#fff}
+ </style>
+</defs>
+<rect width="1900" height="1320" fill="#fff"/>
+<text x="55" y="55" class="title">LAB: Ethical Hacking — Metasploit Detection &amp; Enterprise Network Segmentation</text>
+<text x="55" y="84" class="sub">EVE-NG / PNETLab • pfSense • DMZ • Windows AD • ELK SIEM • Kali SOC • isolated defensive validation range</text>
+
+<rect x="45" y="115" width="1810" height="1090" rx="22" fill="#F9FBFD" stroke="#0078D4" stroke-width="3"/>
+<rect x="70" y="132" width="205" height="36" rx="8" fill="#0078D4"/><text x="172" y="156" text-anchor="middle" class="chip">EVE-NG LAB BOUNDARY</text>
+<text x="300" y="156" class="small">All links are virtual Ethernet connections; no bridge to production or public networks</text>
+
+<!-- WAN simulator -->
+<rect x="90" y="205" width="280" height="135" rx="15" class="zone"/>
+<text x="230" y="237" text-anchor="middle" class="head">WAN Simulator</text>
+<circle cx="230" cy="270" r="22" fill="#64748B"/><path d="M213 270 h34 M230 253 v34" stroke="#fff" stroke-width="2"/>
+<text x="230" y="312" text-anchor="middle" class="ip">192.0.2.1/30</text>
+<text x="230" y="330" text-anchor="middle" class="tiny">TEST-NET only • no upstream route</text>
+
+<!-- firewall -->
+<rect x="465" y="190" width="390" height="165" rx="16" class="node"/>
+<rect x="495" y="220" width="60" height="60" rx="9" fill="#C74646"/>
+<path d="M505 233 h40 M505 245 h40 M505 257 h40 M517 220 v60 M533 220 v60" stroke="#fff" stroke-width="3"/>
+<text x="680" y="235" text-anchor="middle" class="head">pfSense Firewall</text>
+<text x="680" y="264" text-anchor="middle" class="ip">WAN 192.0.2.2/30</text>
+<text x="680" y="289" text-anchor="middle" class="small">DMZ 10.10.10.1/24</text>
+<text x="680" y="312" text-anchor="middle" class="small">LAN 10.10.20.1/24</text>
+<text x="680" y="335" text-anchor="middle" class="small">MGMT 10.10.30.1/24</text>
+<path d="M370 270 H465" class="wire"/>
+<text x="418" y="255" text-anchor="middle" class="tiny">WAN /30</text>
+
+<!-- Core virtual switch -->
+<rect x="965" y="205" width="350" height="135" rx="15" class="node"/>
+<rect x="995" y="235" width="54" height="48" rx="7" fill="#64748B"/>
+<path d="M1005 246 h34 M1005 257 h34 M1005 268 h34" stroke="#fff" stroke-width="2"/>
+<text x="1155" y="242" text-anchor="middle" class="head">EVE-NG L2 Fabric</text>
+<text x="1155" y="273" text-anchor="middle" class="small">Virtual switch / VLAN segments</text>
+<text x="1155" y="302" text-anchor="middle" class="tiny">Port groups / isolated networks</text>
+<path d="M855 275 H965" class="wire"/>
+<text x="910" y="260" text-anchor="middle" class="tiny">LAN / trunk links</text>
+
+<!-- zones -->
+<rect x="90" y="410" width="530" height="350" rx="18" class="dmz"/>
+<text x="120" y="448" class="head">VLAN 10 — DMZ</text><text x="120" y="474" class="ip">10.10.10.0/24 • Gateway 10.10.10.1</text>
+<rect x="135" y="520" width="205" height="165" rx="13" class="node"/>
+<rect x="160" y="545" width="42" height="42" rx="6" fill="#E95420"/><text x="181" y="573" text-anchor="middle" class="chip">U</text>
+<text x="260" y="550" text-anchor="middle" class="head">Ubuntu Web</text>
+<text x="237" y="595" text-anchor="middle" class="ip">10.10.10.10</text>
+<text x="237" y="620" text-anchor="middle" class="small">Apache / test web</text>
+<text x="237" y="645" text-anchor="middle" class="tiny">HTTP(S) • restricted inbound</text>
+<rect x="375" y="520" width="205" height="165" rx="13" class="node"/>
+<rect x="400" y="545" width="42" height="42" rx="6" fill="#E95420"/><text x="421" y="573" text-anchor="middle" class="chip">U</text>
+<text x="500" y="550" text-anchor="middle" class="head">Ubuntu Mail</text>
+<text x="477" y="595" text-anchor="middle" class="ip">10.10.10.20</text>
+<text x="477" y="620" text-anchor="middle" class="small">SMTP / IMAP test</text>
+<text x="477" y="645" text-anchor="middle" class="tiny">Lab-only mail service</text>
+
+<rect x="685" y="410" width="625" height="350" rx="18" class="internal"/>
+<text x="715" y="448" class="head">VLAN 20 — INTERNAL WINDOWS LAN</text><text x="715" y="474" class="ip">10.10.20.0/24 • Gateway 10.10.20.1</text>
+<rect x="720" y="520" width="175" height="165" rx="13" class="node"/>
+<rect x="742" y="545" width="40" height="40" rx="5" fill="#0078D4"/><path d="M750 553 h10 v10 h-10z M765 553 h10 v10 h-10z M750 568 h10 v10 h-10z M765 568 h10 v10 h-10z" fill="#fff"/>
+<text x="820" y="550" text-anchor="middle" class="head">AD / DNS / DHCP</text>
+<text x="807" y="595" text-anchor="middle" class="ip">10.10.20.10</text>
+<text x="807" y="622" text-anchor="middle" class="small">Windows Server 2022</text>
+<text x="807" y="648" text-anchor="middle" class="tiny">corp.example.test</text>
+<rect x="910" y="520" width="175" height="165" rx="13" class="node"/>
+<rect x="932" y="545" width="40" height="40" rx="5" fill="#0078D4"/><path d="M940 553 h10 v10 h-10z M955 553 h10 v10 h-10z M940 568 h10 v10 h-10z M955 568 h10 v10 h-10z" fill="#fff"/>
+<text x="1010" y="550" text-anchor="middle" class="head">File Server</text>
+<text x="997" y="595" text-anchor="middle" class="ip">10.10.20.20</text>
+<text x="997" y="622" text-anchor="middle" class="small">Windows Server</text>
+<text x="997" y="648" text-anchor="middle" class="tiny">SMB share • test data only</text>
+<rect x="1100" y="520" width="175" height="165" rx="13" class="node"/>
+<rect x="1122" y="545" width="40" height="40" rx="5" fill="#0078D4"/><path d="M1130 553 h10 v10 h-10z M1145 553 h10 v10 h-10z M1130 568 h10 v10 h-10z M1145 568 h10 v10 h-10z" fill="#fff"/>
+<text x="1200" y="550" text-anchor="middle" class="head">Workstation</text>
+<text x="1187" y="595" text-anchor="middle" class="ip">10.10.20.30</text>
+<text x="1187" y="622" text-anchor="middle" class="small">Windows 10 / 11</text>
+<text x="1187" y="648" text-anchor="middle" class="tiny">Defender + Sysmon</text>
+
+<rect x="1375" y="410" width="430" height="350" rx="18" class="mgmt"/>
+<text x="1405" y="448" class="head">VLAN 30 — MANAGEMENT / SOC</text><text x="1405" y="474" class="ip">10.10.30.0/24 • Gateway 10.10.30.1</text>
+<rect x="1410" y="520" width="170" height="165" rx="13" class="node"/>
+<rect x="1430" y="545" width="40" height="40" rx="6" fill="#E95420"/><text x="1450" y="573" text-anchor="middle" class="chip">U</text>
+<text x="1520" y="550" text-anchor="middle" class="head">ELK SIEM</text>
+<text x="1495" y="595" text-anchor="middle" class="ip">10.10.30.10</text>
+<text x="1495" y="622" text-anchor="middle" class="small">Elasticsearch</text>
+<text x="1495" y="648" text-anchor="middle" class="tiny">Logstash / Kibana</text>
+<rect x="1600" y="520" width="170" height="165" rx="13" class="node"/>
+<rect x="1620" y="545" width="40" height="40" rx="6" fill="#24292F"/><path d="M1628 554 h24 v17 h-24z M1635 575 h10" stroke="#fff" fill="none" stroke-width="2"/>
+<text x="1710" y="550" text-anchor="middle" class="head">SOC Kali</text>
+<text x="1685" y="595" text-anchor="middle" class="ip">10.10.30.20</text>
+<text x="1685" y="622" text-anchor="middle" class="small">Analyst console</text>
+<text x="1685" y="648" text-anchor="middle" class="tiny">Metasploit framework installed</text>
+
+<!-- connections from fabric to zone -->
+<path d="M1140 340 V380 H355 V410" class="wire"/>
+<path d="M1140 380 H995 V410" class="wire"/>
+<path d="M1140 380 H1590 V410" class="wire"/>
+<text x="700" y="370" text-anchor="middle" class="tiny">Separate virtual Ethernet segments / pfSense routed interfaces</text>
+<!-- firewall routed links -->
+<path d="M660 355 V390 H355 V410" class="wire"/>
+<path d="M700 355 V398 H995 V410" class="wire"/>
+<path d="M740 355 V402 H1590 V410" class="wire"/>
+
+<!-- telemetry from internal and dmz to SIEM -->
+<path d="M995 685 V720 H1495 V685" class="mon"/>
+<path d="M237 685 V735 H1495 V685" class="mon"/>
+<path d="M1187 685 V710 H1495 V685" class="mon"/>
+<text x="880" y="738" text-anchor="middle" class="tiny">Syslog / Windows Event Forwarding / agent telemetry → SIEM</text>
+
+<!-- optional test segment -->
+<rect x="90" y="805" width="1715" height="285" rx="18" class="test"/>
+<text x="120" y="845" class="head">VLAN 40 — CONTROLLED VALIDATION / ANALYST TEST ZONE</text>
+<text x="120" y="871" class="ip">10.10.40.0/24 • no default gateway • explicit allow-list only</text>
+<rect x="145" y="915" width="340" height="125" rx="13" class="node"/>
+<rect x="170" y="940" width="48" height="48" rx="7" fill="#24292F"/><path d="M180 950 h28 v20 h-28z M188 976 h12" stroke="#fff" fill="none" stroke-width="2"/>
+<text x="340" y="950" text-anchor="middle" class="head">Kali Test VM</text>
+<text x="340" y="980" text-anchor="middle" class="ip">10.10.40.10/24</text>
+<text x="340" y="1008" text-anchor="middle" class="tiny">Benign validation cases only</text>
+<rect x="600" y="915" width="340" height="125" rx="13" class="node"/>
+<rect x="625" y="940" width="48" height="48" rx="7" fill="#0078D4"/><path d="M635 950 h28 v28 h-28z" stroke="#fff" fill="none" stroke-width="2"/>
+<text x="795" y="950" text-anchor="middle" class="head">Disposable Windows Target</text>
+<text x="795" y="980" text-anchor="middle" class="ip">10.10.40.20/24</text>
+<text x="795" y="1008" text-anchor="middle" class="tiny">Defender on • snapshots • synthetic data</text>
+<rect x="1060" y="915" width="650" height="125" rx="13" fill="#FFF" stroke="#C58A32" stroke-width="2"/>
+<text x="1385" y="950" text-anchor="middle" class="head">Safety / Test Constraints</text>
+<text x="1385" y="980" text-anchor="middle" class="small">No AV bypass payloads • no persistence • no credential theft</text>
+<text x="1385" y="1008" text-anchor="middle" class="small">No lateral movement • no exfiltration • capture detections and logs only</text>
+<path d="M485 978 H600" class="wire"/>
+<text x="542" y="961" text-anchor="middle" class="tiny">Approved test traffic</text>
+<path d="M940 978 H1060" class="mon"/>
+<text x="1000" y="961" text-anchor="middle" class="tiny">Event review</text>
+
+<rect x="90" y="1120" width="1715" height="48" rx="10" fill="#FDECEC" stroke="#C74646" stroke-width="1.5"/>
+<text x="947" y="1150" text-anchor="middle" font-size="16" font-weight="700" fill="#A4262C">ISOLATED RANGE • NO INTERNET / NAT • NO PRODUCTION ROUTE • DO NOT DISABLE DEFENDER OR EXPOSE SERVICES</text>
+
+<text x="60" y="1240" class="tiny">IP plan based on the article's inventory: WAN 192.0.2.0/30; DMZ 10.10.10.0/24; Internal 10.10.20.0/24; Management 10.10.30.0/24. VLAN 40 is an added isolated validation segment.</text>
+<text x="60" y="1264" class="tiny">Conceptual EVE-NG topology. Use the correct virtual NIC mapping for each node; pfSense routes between segments with default-deny inter-VLAN rules.</text>
+</svg>
