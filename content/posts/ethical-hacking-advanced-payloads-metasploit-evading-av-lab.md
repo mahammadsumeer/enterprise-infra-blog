@@ -40,28 +40,7 @@ The purpose of this hands‑on lab is to guide a senior penetration tester throu
 
 The following diagram illustrates the logical segmentation used throughout the lab. The topology is deliberately built to showcase **defense‑in‑depth** layers (firewall, IDS/IPS, NAC) and to provide realistic pivot points for the attacker.
 
-```mermaid
-graph TD
-    Internet["Internet"] --> FW["Perimeter Firewall (pfSense)"]
-    FW --> DMZ["DMZ VLAN"]
-    FW --> Internal["Internal LAN (Core Switch)"]
-    FW --> Mgmt["Management VLAN"]
-    DMZ --> WebSrv["Web Server (Ubuntu)"]
-    DMZ --> MailSrv["Mail Server (Ubuntu)"]
-    Internal --> AD["Active Directory (Win Server)"]
-    Internal --> FileSrv["File Server (Win Server)"]
-    Internal --> Workstation["User Workstation (Win10)"]
-    Mgmt --> SIEM["SIEM (ELK)"]
-    Mgmt --> SOC["SOC Workstation (Kali)"]
-    AD --> DNS["DNS (AD Integrated)"]
-    AD --> DHCP["DHCP (AD Integrated)"]
-    classDef dmz fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef internal fill:#bbf,stroke:#333,stroke-width:2px;
-    classDef mgmt fill:#bfb,stroke:#333,stroke-width:2px;
-    class DMZ dmz;
-    class Internal internal;
-    class Mgmt mgmt;
-```
+![Enterprise Architecture Topology](/images/metasploit-enterprise-eve-ng-topology.svg)
 
 ### 2.1 Topology Rationale
 | Segment | Primary Function | Typical Security Controls |
