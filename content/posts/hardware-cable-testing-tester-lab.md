@@ -39,45 +39,38 @@ The following diagram illustrates a simplified campus core‑distribution‑acce
 
 ```mermaid
 flowchart LR
-    subgraph "Core Layer"
-        C1["Core Switch (Cisco Nexus 9000)"]
-        C2["Core Switch (Cisco Nexus 9000)"]
-    end
-
-    subgraph "Distribution Layer"
-        D1["Distribution Switch (Cisco Catalyst 9500)"]
-        D2["Distribution Switch (Cisco Catalyst 9500)"]
-    end
-
-    subgraph "Access Layer"
-        A1["Access Switch (Cisco Catalyst 9300)"]
-        A2["Access Switch (Cisco Catalyst 9300)"]
-        A3["Access Switch (Cisco Catalyst 9300)"]
-    end
-
-    subgraph "End Devices"
-        PC1["Client VM (Ubuntu)"]
-        PC2["Client VM (Ubuntu)"]
-        PC3["Server (Windows Server 2022)"]
-        PC4["IP Phone (Cisco 8845)"]
-    end
-
+subgraph "Core Layer"
+    C1["Core Switch (Cisco Nexus 9000)"]
+    C2["Core Switch (Cisco Nexus 9000)"]
+end
+subgraph "Distribution Layer"
+    D1["Distribution Switch (Cisco Catalyst 9500)"]
+    D2["Distribution Switch (Cisco Catalyst 9500)"]
+end
+subgraph "Access Layer"
+    A1["Access Switch (Cisco Catalyst 9300)"]
+    A2["Access Switch (Cisco Catalyst 9300)"]
+    A3["Access Switch (Cisco Catalyst 9300)"]
+end
+subgraph "End Devices"
+    PC1["Client VM (Ubuntu)"]
+    PC2["Client VM (Ubuntu)"]
+    PC3["Server (Windows Server 2022)"]
+    PC4["IP Phone (Cisco 8845)"]
+end
     %% Core ↔ Distribution (Fiber)
     C1 -->|Fiber 40G QSFP+| D1
     C2 -->|Fiber 40G QSFP+| D2
     D1 -->|Fiber 40G QSFP+| D2
-
     %% Distribution ↔ Access (Copper)
     D1 -->|Cat6a 10G| A1
     D1 -->|Cat6a 10G| A2
     D2 -->|Cat6a 10G| A3
-
     %% Access ↔ End Devices (Copper)
     A1 -->|Cat6 1G| PC1
     A2 -->|Cat6 1G| PC2
     A3 -->|Cat6 1G| PC3
     A3 -->|Cat6 1G| PC4
-
     %% Management Network (Out‑of‑Band)
     C1 -.->|Mgmt VLAN 100| MGMT["OOB Management Server (Linux)"]
     C2 -.->|Mgmt VLAN 100| MGMT
