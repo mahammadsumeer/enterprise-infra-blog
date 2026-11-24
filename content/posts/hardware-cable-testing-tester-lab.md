@@ -59,21 +59,21 @@ subgraph "End Devices"
     PC4["IP Phone (Cisco 8845)"]
 end
     %% Core ↔ Distribution (Fiber)
-    C1 -->|Fiber 40G QSFP+| D1
-    C2 -->|Fiber 40G QSFP+| D2
-    D1 -->|Fiber 40G QSFP+| D2
+    C1 -->|"Fiber 40G QSFP+"| D1
+    C2 -->|"Fiber 40G QSFP+"| D2
+    D1 -->|"Fiber 40G QSFP+"| D2
     %% Distribution ↔ Access (Copper)
-    D1 -->|Cat6a 10G| A1
-    D1 -->|Cat6a 10G| A2
-    D2 -->|Cat6a 10G| A3
+    D1 -->|"Cat6a 10G"| A1
+    D1 -->|"Cat6a 10G"| A2
+    D2 -->|"Cat6a 10G"| A3
     %% Access ↔ End Devices (Copper)
-    A1 -->|Cat6 1G| PC1
-    A2 -->|Cat6 1G| PC2
-    A3 -->|Cat6 1G| PC3
-    A3 -->|Cat6 1G| PC4
+    A1 -->|"Cat6 1G"| PC1
+    A2 -->|"Cat6 1G"| PC2
+    A3 -->|"Cat6 1G"| PC3
+    A3 -->|"Cat6 1G"| PC4
     %% Management Network (Out‑of‑Band)
-    C1 -.->|Mgmt VLAN 100| MGMT["OOB Management Server (Linux)"]
-    C2 -.->|Mgmt VLAN 100| MGMT
+    C1 -.->|"Mgmt VLAN 100"| MGMT["OOB Management Server (Linux)"]
+    C2 -.->|"Mgmt VLAN 100"| MGMT
 ```
 
 *Key points for the lab:*
