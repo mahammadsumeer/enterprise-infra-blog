@@ -49,29 +49,24 @@ All traffic between zones must be **mutually authenticated** using WireGuard and
 
 ```mermaid
 graph LR
-    subgraph "Internet"
-        I["Internet"]
-    end
-
-    subgraph "Perimeter"
-        FW["fw01 (Ubuntu)"]
-    end
-
-    subgraph "DMZ Zone"
-        DMZ1["dmz01 (Ubuntu)"]
-        DMZ2["dmz02 (Ubuntu)"]
-    end
-
-    subgraph "Application Zone"
-        APP1["app01 (Ubuntu)"]
-        APP2["app02 (Ubuntu)"]
-    end
-
-    subgraph "Management Zone"
-        MGMT1["mgmt01 (Ubuntu)"]
-        MGMT2["mgmt02 (Ubuntu)"]
-    end
-
+subgraph "Internet"
+    I["Internet"]
+end
+subgraph "Perimeter"
+    FW["fw01 (Ubuntu)"]
+end
+subgraph "DMZ Zone"
+    DMZ1["dmz01 (Ubuntu)"]
+    DMZ2["dmz02 (Ubuntu)"]
+end
+subgraph "Application Zone"
+    APP1["app01 (Ubuntu)"]
+    APP2["app02 (Ubuntu)"]
+end
+subgraph "Management Zone"
+    MGMT1["mgmt01 (Ubuntu)"]
+    MGMT2["mgmt02 (Ubuntu)"]
+end
     I --> FW
     FW --> DMZ1
     FW --> DMZ2
@@ -79,19 +74,16 @@ graph LR
     FW --> APP2
     FW --> MGMT1
     FW --> MGMT2
-
     %% OVS bridges (logical)
     FW --> OVS1["br-dmz (OVS)"]
     FW --> OVS2["br-app (OVS)"]
     FW --> OVS3["br-mgmt (OVS)"]
-
     OVS1 --> DMZ1
     OVS1 --> DMZ2
     OVS2 --> APP1
     OVS2 --> APP2
     OVS3 --> MGMT1
     OVS3 --> MGMT2
-
     %% WireGuard tunnels (mutual auth)
     DMZ1 --> WG1["wg0 (WireGuard)"]
     DMZ2 --> WG1
@@ -99,7 +91,6 @@ graph LR
     APP2 --> WG2
     MGMT1 --> WG3["wg0 (WireGuard)"]
     MGMT2 --> WG3
-
     WG1 --> WG2
     WG2 --> WG3
     WG3 --> WG1
