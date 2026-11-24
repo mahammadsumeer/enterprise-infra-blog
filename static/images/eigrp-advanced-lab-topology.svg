@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 980" width="1500" height="980" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" xmlns:c2pa="http://c2pa.org/manifest">
+  <title>EIGRP Advanced Features Lab - Network Topology</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#14213d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gRtr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5bb8ff"/>
+      <stop offset="1" stop-color="#1257b8"/>
+    </linearGradient>
+    <linearGradient id="gSw" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4fd1c5"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="gScr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#1e40af"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#38bdf8" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- EVE-NG style router: round blue icon with 4 arrows -->
+    <g id="router">
+      <circle r="32" fill="url(#gRtr)" stroke="#0b3d91" stroke-width="2" filter="url(#glow)"/>
+      <path d="M-17 0H17M0 -17V17" stroke="#fff" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <g fill="#fff">
+        <polygon points="23,0 12,-8 12,8"/>
+        <polygon points="-23,0 -12,-8 -12,8"/>
+        <polygon points="0,-23 -8,-12 8,-12"/>
+        <polygon points="0,23 -8,12 8,12"/>
+      </g>
+    </g>
+
+    <!-- EVE-NG style L2 switch: flat box with opposing arrows -->
+    <g id="switch">
+      <rect x="-42" y="-22" width="84" height="44" rx="9" fill="url(#gSw)" stroke="#0b5563" stroke-width="2" filter="url(#glow)"/>
+      <path d="M-24 -7H16M24 7H-16" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <polygon points="26,-7 15,-14 15,0" fill="#fff"/>
+      <polygon points="-26,7 -15,0 -15,14" fill="#fff"/>
+      <g fill="#c7f9f1">
+        <circle cx="-28" cy="17" r="1.8"/><circle cx="-14" cy="17" r="1.8"/><circle cx="0" cy="17" r="1.8"/>
+        <circle cx="14" cy="17" r="1.8"/><circle cx="28" cy="17" r="1.8"/>
+      </g>
+    </g>
+
+    <!-- EVE-NG style PC / VPCS -->
+    <g id="pc">
+      <rect x="-24" y="-22" width="48" height="32" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="-20" y="-18" width="40" height="24" rx="2" fill="url(#gScr)"/>
+      <rect x="-4" y="10" width="8" height="7" fill="#94a3b8"/>
+      <rect x="-15" y="17" width="30" height="4" rx="2" fill="#94a3b8"/>
+    </g>
+  </defs>
+
+  <style>
+    .title { font-size: 30px; font-weight: 800; fill: #f8fafc; letter-spacing: 0.3px; }
+    .subtitle { font-size: 14px; fill: #94a3b8; letter-spacing: 1.2px; }
+    .zone { fill: rgba(148,163,184,0.05); stroke: #334155; stroke-width: 1.5; }
+    .zhead { font-size: 12px; font-weight: 700; fill: #94a3b8; letter-spacing: 2px; }
+    .zsub { font-size: 12px; font-weight: 600; fill: #64748b; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .dev { font-size: 19px; font-weight: 800; fill: #f1f5f9; }
+    .role { font-size: 12px; fill: #cbd5e1; }
+    .lo { font-size: 11px; fill: #a78bfa; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .port { font-size: 11px; font-weight: 600; fill: #cbd5e1; }
+    .ipl { font-size: 11px; font-weight: 600; fill: #7dd3fc; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .ipw { font-size: 11px; font-weight: 600; fill: #fbbf24; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .pill-l { font-size: 11px; font-weight: 700; fill: #7dd3fc; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .pill-w { font-size: 11px; font-weight: 700; fill: #fbbf24; font-family: 'JetBrains Mono', Consolas, monospace; }
+    .card { fill: #0f172a; stroke: #334155; stroke-width: 1.5; }
+    .ch { font-size: 11px; font-weight: 700; fill: #38bdf8; letter-spacing: 2px; }
+    .ct { font-size: 12.5px; fill: #cbd5e1; }
+    .foot { font-size: 11px; fill: #64748b; }
+    .eth { stroke: #38bdf8; stroke-width: 3; stroke-linecap: round; fill: none; }
+    .ser { stroke: #f59e0b; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 9 6; fill: none; }
+    .up { fill: #22c55e; stroke: #0b1220; stroke-width: 1.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1500" height="980" fill="url(#bg)"/>
+
+  <!-- Heading -->
+  <text x="750" y="52" text-anchor="middle" class="title">EIGRP Advanced Features: Stub Routing &amp; Route Summarization</text>
+  <text x="750" y="80" text-anchor="middle" class="subtitle">CCNA LAB TOPOLOGY  ·  HUB-AND-SPOKE WAN  ·  EIGRP AS 100</text>
+  <rect x="500" y="94" width="500" height="3" rx="1.5" fill="url(#accent)"/>
+
+  <!-- Site zones -->
+  <rect class="zone" x="40" y="120" width="380" height="730" rx="22"/>
+  <rect class="zone" x="560" y="120" width="380" height="730" rx="22"/>
+  <rect class="zone" x="1080" y="120" width="380" height="730" rx="22"/>
+  <text class="zhead" x="62" y="152">BRANCH-1 SITE</text>
+  <text class="zsub" x="398" y="152" text-anchor="end">10.1.0.0/24</text>
+  <text class="zhead" x="582" y="152">HEADQUARTERS (HQ)</text>
+  <text class="zsub" x="918" y="152" text-anchor="end">10.0.0.0/24</text>
+  <text class="zhead" x="1102" y="152">BRANCH-2 SITE</text>
+  <text class="zsub" x="1438" y="152" text-anchor="end">10.2.0.0/24</text>
+
+  <!-- ===== CABLES ===== -->
+  <!-- WAN serial links -->
+  <line class="ser" x1="750" y1="300" x2="230" y2="300"/>
+  <line class="ser" x1="750" y1="300" x2="1270" y2="300"/>
+  <!-- LAN ethernet links -->
+  <line class="eth" x1="750" y1="300" x2="750" y2="520"/>
+  <line class="eth" x1="750" y1="520" x2="660" y2="740"/>
+  <line class="eth" x1="750" y1="520" x2="840" y2="740"/>
+  <line class="eth" x1="230" y1="300" x2="230" y2="520"/>
+  <line class="eth" x1="230" y1="520" x2="230" y2="740"/>
+  <line class="eth" x1="1270" y1="300" x2="1270" y2="520"/>
+  <line class="eth" x1="1270" y1="520" x2="1270" y2="740"/>
+
+  <!-- Subnet pills on links -->
+  <g>
+    <rect x="434" y="286" width="112" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+    <text class="pill-w" x="490" y="304" text-anchor="middle">172.16.1.0/30</text>
+    <rect x="954" y="286" width="112" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+    <text class="pill-w" x="1010" y="304" text-anchor="middle">172.16.2.0/30</text>
+
+    <rect x="667" y="397" width="166" height="26" rx="13" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+    <text class="pill-l" x="750" y="414" text-anchor="middle">10.0.0.0/24 · VLAN 10</text>
+    <rect x="147" y="397" width="166" height="26" rx="13" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+    <text class="pill-l" x="230" y="414" text-anchor="middle">10.1.0.0/24 · VLAN 10</text>
+    <rect x="1187" y="397" width="166" height="26" rx="13" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+    <text class="pill-l" x="1270" y="414" text-anchor="middle">10.2.0.0/24 · VLAN 10</text>
+  </g>
+
+  <!-- ===== DEVICES ===== -->
+  <use xlink:href="#router" x="750" y="300"/>
+  <use xlink:href="#router" x="230" y="300"/>
+  <use xlink:href="#router" x="1270" y="300"/>
+  <use xlink:href="#switch" x="750" y="520"/>
+  <use xlink:href="#switch" x="230" y="520"/>
+  <use xlink:href="#switch" x="1270" y="520"/>
+  <use xlink:href="#pc" x="660" y="740"/>
+  <use xlink:href="#pc" x="840" y="740"/>
+  <use xlink:href="#pc" x="230" y="740"/>
+  <use xlink:href="#pc" x="1270" y="740"/>
+
+  <!-- Link-up indicators -->
+  <g class="up">
+    <circle cx="718" cy="300" r="4.5"/><circle cx="262" cy="300" r="4.5"/>
+    <circle cx="782" cy="300" r="4.5"/><circle cx="1238" cy="300" r="4.5"/>
+    <circle cx="750" cy="332" r="4.5"/><circle cx="750" cy="498" r="4.5"/>
+    <circle cx="230" cy="332" r="4.5"/><circle cx="230" cy="498" r="4.5"/>
+    <circle cx="1270" cy="332" r="4.5"/><circle cx="1270" cy="498" r="4.5"/>
+    <circle cx="741" cy="542" r="4.5"/><circle cx="669" cy="718" r="4.5"/>
+    <circle cx="759" cy="542" r="4.5"/><circle cx="831" cy="718" r="4.5"/>
+    <circle cx="230" cy="542" r="4.5"/><circle cx="230" cy="718" r="4.5"/>
+    <circle cx="1270" cy="542" r="4.5"/><circle cx="1270" cy="718" r="4.5"/>
+  </g>
+
+  <!-- ===== ROUTER LABELS ===== -->
+  <g text-anchor="middle">
+    <text class="lo" x="750" y="196">Lo0 192.168.1.1/32 · AS 100</text>
+    <text class="dev" x="750" y="226">R1</text>
+    <text class="role" x="750" y="246">HQ Core · EIGRP Stub</text>
+
+    <text class="lo" x="230" y="196">Lo0 192.168.2.1/32 · AS 100</text>
+    <text class="dev" x="230" y="226">R2</text>
+    <text class="role" x="230" y="246">Branch-1 Core</text>
+
+    <text class="lo" x="1270" y="196">Lo0 192.168.3.1/32 · AS 100</text>
+    <text class="dev" x="1270" y="226">R3</text>
+    <text class="role" x="1270" y="246">Branch-2 Core</text>
+  </g>
+
+  <!-- ===== WAN INTERFACE LABELS ===== -->
+  <!-- R1 <-> R2 -->
+  <text class="port" x="708" y="288" text-anchor="end">Se0/0</text>
+  <text class="ipw" x="708" y="320" text-anchor="end">172.16.1.1/30</text>
+  <text class="port" x="272" y="288" text-anchor="start">Se0/0</text>
+  <text class="ipw" x="272" y="320" text-anchor="start">172.16.1.2/30</text>
+  <!-- R1 <-> R3 -->
+  <text class="port" x="792" y="288" text-anchor="start">Se0/1</text>
+  <text class="ipw" x="792" y="320" text-anchor="start">172.16.2.1/30</text>
+  <text class="port" x="1228" y="288" text-anchor="end">Se0/0</text>
+  <text class="ipw" x="1228" y="320" text-anchor="end">172.16.2.2/30</text>
+
+  <!-- ===== LAN INTERFACE LABELS ===== -->
+  <g>
+    <text class="port" x="762" y="352">Gi0/0</text>
+    <text class="ipl" x="762" y="367">10.0.0.1/24</text>
+    <text class="port" x="762" y="488">Gi0/0</text>
+
+    <text class="port" x="242" y="352">Gi0/0</text>
+    <text class="ipl" x="242" y="367">10.1.0.1/24</text>
+    <text class="port" x="242" y="488">Gi0/0</text>
+
+    <text class="port" x="1282" y="352">Gi0/0</text>
+    <text class="ipl" x="1282" y="367">10.2.0.1/24</text>
+    <text class="port" x="1282" y="488">Gi0/0</text>
+
+    <!-- switch to PC ports -->
+    <text class="port" x="722" y="592" text-anchor="end">Fa0/1</text>
+    <text class="port" x="778" y="592">Fa0/2</text>
+    <text class="port" x="242" y="602">Fa0/1</text>
+    <text class="port" x="1282" y="602">Fa0/1</text>
+  </g>
+
+  <!-- ===== SWITCH LABELS ===== -->
+  <g>
+    <text class="dev" x="802" y="514" style="font-size:16px">SW1</text>
+    <text class="role" x="802" y="530">Distribution (L2)</text>
+    <text class="ipl" x="802" y="546">Vlan10 10.0.0.2/24</text>
+
+    <text class="dev" x="282" y="514" style="font-size:16px">SW2</text>
+    <text class="role" x="282" y="530">Distribution (L2)</text>
+    <text class="ipl" x="282" y="546">Vlan10 10.1.0.2/24</text>
+
+    <text class="dev" x="1322" y="514" style="font-size:16px">SW3</text>
+    <text class="role" x="1322" y="530">Distribution (L2)</text>
+    <text class="ipl" x="1322" y="546">Vlan10 10.2.0.2/24</text>
+  </g>
+
+  <!-- ===== PC LABELS ===== -->
+  <g text-anchor="middle">
+    <text class="dev" x="660" y="788" style="font-size:15px">PC1</text>
+    <text class="ipl" x="660" y="804">10.0.0.10/24</text>
+    <text class="role" x="660" y="820" style="font-size:11px">GW 10.0.0.1</text>
+
+    <text class="dev" x="840" y="788" style="font-size:15px">PC2</text>
+    <text class="ipl" x="840" y="804">10.0.0.11/24</text>
+    <text class="role" x="840" y="820" style="font-size:11px">GW 10.0.0.1</text>
+
+    <text class="dev" x="230" y="788" style="font-size:15px">PC3</text>
+    <text class="ipl" x="230" y="804">10.1.0.10/24</text>
+    <text class="role" x="230" y="820" style="font-size:11px">GW 10.1.0.1</text>
+
+    <text class="dev" x="1270" y="788" style="font-size:15px">PC4</text>
+    <text class="ipl" x="1270" y="804">10.2.0.10/24</text>
+    <text class="role" x="1270" y="820" style="font-size:11px">GW 10.2.0.1</text>
+  </g>
+
+  <!-- ===== LEGEND ===== -->
+  <rect class="card" x="40" y="875" width="500" height="72" rx="14"/>
+  <text class="ch" x="62" y="897">LEGEND</text>
+  <line class="eth" x1="62" y1="923" x2="102" y2="923"/>
+  <text class="ct" x="112" y="927">Ethernet (Gi / Fa)</text>
+  <line class="ser" x1="250" y1="923" x2="294" y2="923"/>
+  <text class="ct" x="304" y="927">Serial / PPP WAN</text>
+  <circle class="up" cx="446" cy="923" r="5"/>
+  <text class="ct" x="458" y="927">Link up</text>
+
+  <!-- ===== PROTOCOL SUMMARY ===== -->
+  <rect class="card" x="560" y="875" width="900" height="72" rx="14"/>
+  <text class="ch" x="582" y="897">PROTOCOL SUMMARY</text>
+  <text class="ct" x="582" y="920">EIGRP AS 100 on all routers  ·  MD5 authentication (key-chain EIGRP_KEY)  ·  Passive interface on LAN-facing ports</text>
+  <text class="ct" x="582" y="937">R1 = HQ hub (stub)  ·  R2 / R3 summarize branch LANs toward HQ  ·  WAN = point-to-point /30 serial links</text>
+
+  <text class="foot" x="750" y="970" text-anchor="middle">Source: Enterprise Infra &amp; Cloud Labs · CCNA EIGRP Advanced Routing Lab (Sections 2 &amp; 3)</text>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTpmYjI0MzFiNC1lNjNiLTRhODMtYjJhOC00NTNmMmNkNDljZjcAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaLG1iJFhn/+OnDO+ODSv7moAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo5YzUzZDA1ZS03MjZiLTQ2MWMtYWRlZi0wOGE4YjE1OGM1YWVscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo/jf5O7hkY9oUdNt8L2Y7VQAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg68eeFJMMGe63HaU9o+QDFNW3nOnJNo8S9wpjnXcFxamkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaF9XezUSF7q3kNKZXkvKeRIAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIFalENh5ZHWfZ2mfMnSiNgpsmSfAaTfqQAtQi3/mbd7BZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GTTIZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmZiMjQzMWI0LWU2M2ItNGE4My1iMmE4LTQ1M2YyY2Q0OWNmNy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjJhOGI3YTU0LTNmMGUtNDAwOS1iZDMzLTExZmNhNGM1NGIwNXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDrx54UkwwZ7rcdpT2j5AMU1bec6ck2jxL3CmOddwXFqaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggi74L6uG/QDwS1eqRc1SSUv3M5L9pOnOZh3oNAuXcykKiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggmFJ3tpL9gePQYa2e+WAjqZF4AMrzpmbs19U5X8iIH8R0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQFRPNRvJRcSKlnatnuQLCNkL+ISb/6UUsFBYMdhWzUh5p9jvYryyUySAUNB/9gCXs7q+hqGFbB8GnD2D0KjsEq0=</c2pa:manifest></metadata></svg>
