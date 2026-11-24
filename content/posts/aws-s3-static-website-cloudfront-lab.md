@@ -39,30 +39,7 @@ By the end of the lab you will have a reproducible IaC‑style workflow (using A
 
 The following diagram illustrates the logical flow of traffic and the AWS services that compose the solution. It is deliberately kept simple for clarity but reflects a production‑ready pattern.
 
-```mermaid
-graph LR
-    User["End‑User (Browser)"]
-    DNS["Route 53 Hosted Zone"]
-    CF["CloudFront Distribution"]
-    WAF["AWS WAF (Managed + Custom Rules)"]
-    ACM["ACM Certificate (us-east-1)"]
-    S3["S3 Bucket (Static Site)"]
-    LogS3["S3 Bucket (Access Logs)"]
-    CloudWatch["CloudWatch Logs"]
-    IAM["IAM Role (S3‑Read‑Only)"]
-    GitHub["GitHub Repo (Site Source)"]
-    User -->|"HTTPS request"| DNS
-    DNS -->|"CNAME"| CF
-    CF -->|"HTTPS (TLS)"| ACM
-    CF -->|"WAF inspection"| WAF
-    WAF -->|"Allowed"| CF
-    CF -->|"GET Object"| S3
-    S3 -->|"Object"| CF
-    CF -->|"Access Log"| LogS3
-    LogS3 -->|"S3 Event"| CloudWatch
-    IAM -->|"Read"| S3
-    GitHub -->|"git clone"| S3
-```
+![Enterprise Architecture Topology](/images/aws_s3_cloudfront_waf_topology.svg)
 
 *All node labels are wrapped in double quotes as required by the Mermaid rule.*
 
