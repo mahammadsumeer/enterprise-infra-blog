@@ -1,4 +1,5 @@
 ---
+mermaid: true
 title: "AWS Lab: Deploying a Secure Static Website on S3 with CloudFront and WAF"
 date: "2026-11-23"
 draft: false
@@ -50,18 +51,17 @@ graph LR
     CloudWatch["CloudWatch Logs"]
     IAM["IAM Role (S3‑Read‑Only)"]
     GitHub["GitHub Repo (Site Source)"]
-
-    User -->|HTTPS request| DNS
-    DNS -->|CNAME| CF
-    CF -->|HTTPS (TLS) | ACM
-    CF -->|WAF inspection| WAF
-    WAF -->|Allowed| CF
-    CF -->|GET Object| S3
-    S3 -->|Object| CF
-    CF -->|Access Log| LogS3
-    LogS3 -->|S3 Event| CloudWatch
-    IAM -->|Read| S3
-    GitHub -->|git clone| S3
+    User -->|"HTTPS request"| DNS
+    DNS -->|"CNAME"| CF
+    CF -->|"HTTPS (TLS)"| ACM
+    CF -->|"WAF inspection"| WAF
+    WAF -->|"Allowed"| CF
+    CF -->|"GET Object"| S3
+    S3 -->|"Object"| CF
+    CF -->|"Access Log"| LogS3
+    LogS3 -->|"S3 Event"| CloudWatch
+    IAM -->|"Read"| S3
+    GitHub -->|"git clone"| S3
 ```
 
 *All node labels are wrapped in double quotes as required by the Mermaid rule.*
