@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180" role="img" aria-labelledby="t d">
+<title id="t">GCP Lab: Serverless Cloud Functions CI/CD with Cloud Build and IAM Best Practices</title>
+<desc id="d">Google Cloud architecture showing developer and GitHub source, Cloud Build trigger and build steps, Artifact Registry, Cloud Functions second generation deployment, IAM service accounts and custom role, Cloud Logging, Cloud Monitoring, optional VPC and private build subnet, Secret Manager, Workload Identity Federation and Binary Authorization.</desc>
+<defs>
+ <marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 11 6 1 11Z" fill="#5f6368"/></marker>
+ <marker id="b" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 11 6 1 11Z" fill="#4285f4"/></marker>
+ <marker id="g" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 11 6 1 11Z" fill="#188038"/></marker>
+ <style>
+ text{font-family:Arial,sans-serif;fill:#202124}.title{font-size:29px;font-weight:700}.sub{font-size:15px;fill:#5f6368}.h{font-size:18px;font-weight:700}.s{font-size:14px;fill:#5f6368}.xs{font-size:12px;fill:#5f6368}.ip{font-size:13px;font-weight:700;fill:#1967d2}.box{fill:#fff;stroke:#a8c7fa;stroke-width:2}.zone{fill:#f8fbff;stroke:#4285f4;stroke-width:2.5}.sec{fill:#f6f2fb;stroke:#a78bda;stroke-width:2}.obs{fill:#fff9e8;stroke:#f9ab00;stroke-width:2}.vpc{fill:#f1f7ff;stroke:#669df6;stroke-width:2;stroke-dasharray:8 5}.line{fill:none;stroke:#5f6368;stroke-width:2.8;marker-end:url(#a)}.blue{fill:none;stroke:#4285f4;stroke-width:3;marker-end:url(#b)}.green{fill:none;stroke:#188038;stroke-width:2.8;marker-end:url(#g)}.dash{fill:none;stroke:#8e63ce;stroke-width:2.5;stroke-dasharray:8 6}.white{fill:#fff}
+ </style>
+</defs>
+<rect width="1800" height="1180" fill="#fff"/>
+<text x="50" y="52" class="title">GCP LAB: Serverless Cloud Functions CI/CD with Cloud Build</text>
+<text x="50" y="80" class="sub">Google Cloud native architecture • Cloud Build • Artifact Registry • Cloud Functions (2nd gen) • IAM • Observability</text>
+<rect x="40" y="110" width="1720" height="1000" rx="22" fill="#fbfcff" stroke="#4285f4" stroke-width="3"/>
+<rect x="65" y="128" width="235" height="35" rx="8" fill="#4285f4"/><text x="182" y="152" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">GOOGLE CLOUD PROJECT</text>
+<text x="325" y="152" class="s">Project: gcp-functions-cicd-lab • Region: us-central1 (article example)</text>
+
+<!-- Source -->
+<rect x="80" y="205" width="310" height="205" rx="15" class="zone"/>
+<text x="105" y="240" class="h">Developer &amp; Source</text>
+<rect x="110" y="270" width="250" height="105" rx="12" class="box"/>
+<circle cx="150" cy="322" r="23" fill="#24292f"/><path d="M139 322q11-20 22 0l-4 14h-14z" fill="#fff"/>
+<text x="260" y="315" text-anchor="middle" class="h">GitHub Repository</text>
+<text x="260" y="342" text-anchor="middle" class="s">hello-world-fn • main branch</text>
+<text x="260" y="361" text-anchor="middle" class="xs">Node.js / Python source + Dockerfile</text>
+
+<!-- Cloud Build -->
+<rect x="465" y="190" width="650" height="245" rx="16" class="zone"/>
+<text x="495" y="228" class="h">Cloud Build — CI/CD pipeline</text>
+<rect x="495" y="265" width="175" height="125" rx="11" class="box"/>
+<circle cx="535" cy="305" r="22" fill="#4285f4"/><path d="M524 305h22m-11-11v22" stroke="#fff" stroke-width="3"/>
+<text x="600" y="305" text-anchor="middle" class="h">Build Trigger</text>
+<text x="582" y="338" text-anchor="middle" class="s">repo-push-trigger</text>
+<text x="582" y="361" text-anchor="middle" class="xs">Push to main</text>
+<rect x="705" y="265" width="175" height="125" rx="11" class="box"/>
+<circle cx="745" cy="305" r="22" fill="#4285f4"/><path d="M734 305l8 8 15-18" stroke="#fff" stroke-width="3" fill="none"/>
+<text x="815" y="305" text-anchor="middle" class="h">Build &amp; Test</text>
+<text x="792" y="338" text-anchor="middle" class="s">cloudbuild.yaml</text>
+<text x="792" y="361" text-anchor="middle" class="xs">Docker build / tests</text>
+<rect x="915" y="265" width="170" height="125" rx="11" class="box"/>
+<circle cx="955" cy="305" r="22" fill="#4285f4"/><path d="M945 295h20v20h-20z" stroke="#fff" stroke-width="2" fill="none"/>
+<text x="1020" y="305" text-anchor="middle" class="h">Deploy</text>
+<text x="1000" y="338" text-anchor="middle" class="s">gcloud functions</text>
+<text x="1000" y="361" text-anchor="middle" class="xs">deploy hello-world-fn</text>
+<path d="M390 320H495" class="blue"/><text x="440" y="302" text-anchor="middle" class="xs">Git push / webhook</text>
+<path d="M670 327H705" class="blue"/><path d="M880 327H915" class="blue"/>
+
+<!-- Artifact Registry -->
+<rect x="1190" y="205" width="500" height="205" rx="15" class="zone"/>
+<text x="1220" y="240" class="h">Artifact Registry</text>
+<rect x="1230" y="270" width="420" height="105" rx="12" class="box"/>
+<circle cx="1275" cy="322" r="24" fill="#34a853"/><path d="M1263 310h24v24h-24zM1268 315h14v14h-14z" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="1460" y="315" text-anchor="middle" class="h">Docker Repository: lab-repo</text>
+<text x="1460" y="343" text-anchor="middle" class="s">us-central1-docker.pkg.dev/PROJECT_ID/lab-repo</text>
+<text x="1460" y="362" text-anchor="middle" class="xs">Private container image • tagged by commit SHA</text>
+<path d="M1085 327H1190" class="blue"/><text x="1138" y="309" text-anchor="middle" class="xs">Push image</text>
+
+<!-- Runtime -->
+<rect x="465" y="500" width="650" height="260" rx="16" class="zone"/>
+<text x="495" y="538" class="h">Serverless runtime</text>
+<rect x="515" y="575" width="550" height="145" rx="13" class="box"/>
+<circle cx="570" cy="635" r="27" fill="#4285f4"/><path d="M557 622h26v26h-26zM563 628h14v14h-14z" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="820" y="620" text-anchor="middle" class="h">Cloud Functions (2nd gen)</text>
+<text x="820" y="650" text-anchor="middle" class="ip">hello-world-fn • us-central1</text>
+<text x="820" y="678" text-anchor="middle" class="s">HTTP trigger • custom container runtime • function-sa</text>
+<text x="820" y="700" text-anchor="middle" class="xs">HTTPS function URL • max instances limit recommended</text>
+<path d="M1000 390V465H820V575" class="green"/><text x="910" y="456" text-anchor="middle" class="xs">Deploy function</text>
+<path d="M1440 375V455H1065V600" class="green"/><text x="1260" y="447" text-anchor="middle" class="xs">Image source</text>
+
+<!-- request client -->
+<rect x="80" y="535" width="310" height="210" rx="15" class="zone"/>
+<text x="105" y="572" class="h">Function Consumer</text>
+<rect x="115" y="605" width="240" height="100" rx="12" class="box"/>
+<circle cx="155" cy="655" r="22" fill="#5f6368"/><path d="M145 655h20m-10-10v20" stroke="#fff" stroke-width="2"/>
+<text x="265" y="648" text-anchor="middle" class="h">HTTPS Client</text>
+<text x="265" y="675" text-anchor="middle" class="s">curl / browser / API caller</text>
+<path d="M390 655H515" class="line"/><text x="450" y="638" text-anchor="middle" class="xs">HTTPS request</text>
+
+<!-- IAM and security -->
+<rect x="1190" y="485" width="500" height="275" rx="16" class="sec"/>
+<text x="1220" y="523" class="h">IAM &amp; supply-chain security</text>
+<rect x="1225" y="550" width="205" height="80" rx="10" class="box"/>
+<circle cx="1260" cy="590" r="18" fill="#8e63ce"/><path d="M1252 590h16m-8-8v16" stroke="#fff" stroke-width="2"/>
+<text x="1350" y="584" text-anchor="middle" class="h">cloudbuild-sa</text><text x="1350" y="608" text-anchor="middle" class="xs">Build/deploy identity</text>
+<rect x="1450" y="550" width="205" height="80" rx="10" class="box"/>
+<circle cx="1485" cy="590" r="18" fill="#8e63ce"/><path d="M1477 590h16m-8-8v16" stroke="#fff" stroke-width="2"/>
+<text x="1575" y="584" text-anchor="middle" class="h">function-sa</text><text x="1575" y="608" text-anchor="middle" class="xs">Runtime identity</text>
+<rect x="1225" y="655" width="205" height="75" rx="10" class="box"/>
+<text x="1327" y="685" text-anchor="middle" class="h">Custom IAM Role</text><text x="1327" y="709" text-anchor="middle" class="xs">Least privilege permissions</text>
+<rect x="1450" y="655" width="205" height="75" rx="10" class="box"/>
+<text x="1552" y="685" text-anchor="middle" class="h">Secret Manager</text><text x="1552" y="709" text-anchor="middle" class="xs">Function URL / secrets (optional)</text>
+<path d="M1327 630V655" class="dash"/><path d="M1552 630V655" class="dash"/>
+<path d="M1115 650H1190" class="dash"/>
+
+<!-- VPC optional -->
+<rect x="80" y="820" width="500" height="230" rx="16" class="vpc"/>
+<text x="110" y="858" class="h">Optional private Cloud Build network</text>
+<text x="110" y="882" class="s">VPC: lab-vpc • 10.10.0.0/16</text>
+<rect x="120" y="910" width="420" height="105" rx="12" class="box"/>
+<text x="330" y="945" text-anchor="middle" class="h">Subnet: lab-subnet</text>
+<text x="330" y="973" text-anchor="middle" class="ip">10.10.10.0/24 • us-central1</text>
+<text x="330" y="995" text-anchor="middle" class="xs">Private workers • Private Google Access</text>
+<path d="M580 955H640V435H790" class="dash"/><text x="620" y="935" class="xs">Private pool option</text>
+
+<!-- observability -->
+<rect x="650" y="820" width="1040" height="230" rx="16" class="obs"/>
+<text x="680" y="858" class="h">Operations &amp; observability</text>
+<rect x="690" y="900" width="280" height="110" rx="12" class="box"/>
+<circle cx="735" cy="955" r="22" fill="#f9ab00"/><path d="M725 963l8-17 8 10 8-18" stroke="#fff" stroke-width="2" fill="none"/>
+<text x="855" y="950" text-anchor="middle" class="h">Cloud Logging</text><text x="855" y="978" text-anchor="middle" class="xs">Function + build logs</text>
+<rect x="1020" y="900" width="280" height="110" rx="12" class="box"/>
+<circle cx="1065" cy="955" r="22" fill="#f9ab00"/><path d="M1054 963v-17h22v17m-17-22h12" stroke="#fff" stroke-width="2" fill="none"/>
+<text x="1180" y="950" text-anchor="middle" class="h">Cloud Monitoring</text><text x="1180" y="978" text-anchor="middle" class="xs">Metrics • dashboards • alerts</text>
+<rect x="1350" y="900" width="280" height="110" rx="12" class="box"/>
+<circle cx="1395" cy="955" r="22" fill="#f9ab00"/><path d="M1384 944h22v22h-22zM1388 950h14m-14 7h14" stroke="#fff" stroke-width="2" fill="none"/>
+<text x="1510" y="950" text-anchor="middle" class="h">Error Reporting</text><text x="1510" y="978" text-anchor="middle" class="xs">Exception grouping / errors</text>
+<path d="M700 720V780H830V900" class="dash"/><path d="M850 720V790H1160V900" class="dash"/><path d="M930 720V800H1490V900" class="dash"/>
+
+<!-- optional security add-ons -->
+<rect x="650" y="1080" width="1040" height="55" rx="10" fill="#f6f2fb" stroke="#a78bda" stroke-width="1.5"/>
+<text x="680" y="1114" class="s">Hardening extensions: Workload Identity Federation (GitHub OIDC) • Binary Authorization + KMS attestor • VPC Connector for private outbound access • Cloud Audit Logs</text>
+
+<text x="50" y="1155" class="xs">Topology follows the article's core flow: Developer → GitHub → Cloud Build → Artifact Registry → Cloud Function → Cloud Logging / Monitoring.</text>
+<text x="50" y="1175" class="xs">Note: VPC/private build workers, Secret Manager, WIF, Binary Authorization and VPC Connector are optional/hardening features described by the article, not mandatory baseline components.</text>
+</svg>
