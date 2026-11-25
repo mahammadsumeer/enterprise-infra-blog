@@ -141,7 +141,7 @@
     "level": "Beginner",
     "slug": "gcp-cloud-functions-ci-cd-cloud-build-lab",
     "title": "GCP Lab: Building Serverless Cloud Functions with Cloud Build and IAM Best Practices",
-    "done": false
+    "done": true
   },
   {
     "id": 19,
