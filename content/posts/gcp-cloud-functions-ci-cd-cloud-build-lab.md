@@ -40,30 +40,7 @@ categories: ["GCP"]
 
 The diagram below illustrates the logical flow from **developer commit → Cloud Build → Artifact Registry → Cloud Function → Cloud Logging/Monitoring**. Service accounts are isolated per stage, and a custom IAM role enforces the principle of least privilege.
 
-```mermaid
-graph LR
-    dev["Developer Workstation (gcloud)"]
-    repo["GitHub Repo (source)"]
-    cb["Cloud Build (trigger)"]
-    ar["Artifact Registry (Docker)"]
-    cf["Cloud Function (HTTP)"]
-    sa_build["Service Account: Cloud Build SA"]
-    sa_func["Service Account: Cloud Function SA"]
-    log["Cloud Logging"]
-    mon["Cloud Monitoring"]
-    iam["Custom IAM Role (least‑privilege)"]
-
-    dev -->|git push| repo
-    repo -->|trigger| cb
-    cb -->|push image| ar
-    cb -->|deploy| cf
-    cf -->|writes logs| log
-    cf -->|exports metrics| mon
-    sa_build -->|granted| iam
-    sa_func -->|granted| iam
-    iam -->|attached to| sa_build
-    iam -->|attached to| sa_func
-```
+![Enterprise Architecture Topology](/images/gcp-cloud-functions-cicd-topology.svg)
 
 **Key Points**
 
