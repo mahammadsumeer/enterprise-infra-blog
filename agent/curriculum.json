@@ -149,7 +149,7 @@
     "level": "Expert",
     "slug": "devops-terraform-ansible-k8s-helm-gitops-lab",
     "title": "DevOps Lab: Full Infrastructure as Code with Terraform, Ansible, Helm, and GitOps",
-    "done": false
+    "done": true
   },
   {
     "id": 20,
