@@ -158,5 +158,85 @@
     "slug": "devsecops-ci-sast-dast-container-scanning-lab",
     "title": "DevSecOps Lab: Integrating SAST, DAST, and Container Scanning into CI Pipelines",
     "done": false
+  },
+  {
+    "id": 21,
+    "domain": "Hardware & Networking",
+    "level": "Beginner",
+    "slug": "hardware-packet-tracer-basic-lab",
+    "title": "Hardware Lab: Building Basic Network Topology with Cisco Packet Tracer",
+    "done": false
+  },
+  {
+    "id": 22,
+    "domain": "CCNA",
+    "level": "Beginner",
+    "slug": "ccna-basic-routing-static-lab",
+    "title": "CCNA Lab: Configuring Static Routing and Basic IPv4 on Cisco IOS",
+    "done": false
+  },
+  {
+    "id": 23,
+    "domain": "CCNA",
+    "level": "Expert",
+    "slug": "ccna-advanced-bgp-security-lab",
+    "title": "CCNA Expert Lab: BGP Route Filtering, Communities, and Secure BGP Sessions",
+    "done": false
+  },
+  {
+    "id": 24,
+    "domain": "Cyber Security",
+    "level": "Intermediate",
+    "slug": "cybersecurity-siem-log-analysis-lab",
+    "title": "Cyber Security Lab: SIEM Log Collection, Correlation, and Alerting with Elastic Stack",
+    "done": false
+  },
+  {
+    "id": 25,
+    "domain": "Ethical Hacking",
+    "level": "Beginner",
+    "slug": "ethical-hacking-wifi-attack-wpa2-crack-lab",
+    "title": "Ethical Hacking Lab: Wi-Fi Reconnaissance and WPA2 Handshake Capture & Cracking",
+    "done": false
+  },
+  {
+    "id": 26,
+    "domain": "AWS Solutions Architect",
+    "level": "Expert",
+    "slug": "aws-advanced-eks-iam-guardduty-lab",
+    "title": "AWS Lab: Secure EKS Cluster with IAM Roles for Service Accounts and GuardDuty Integration",
+    "done": false
+  },
+  {
+    "id": 27,
+    "domain": "Azure Administrator",
+    "level": "Beginner",
+    "slug": "azure-vm-deployment-azure-cli-lab",
+    "title": "Azure Lab: Deploying Windows and Linux VMs via Azure CLI with Managed Disks",
+    "done": false
+  },
+  {
+    "id": 28,
+    "domain": "GCP",
+    "level": "Intermediate",
+    "slug": "gcp-vpc-peering-cloud-armor-lab",
+    "title": "GCP Lab: VPC Peering with Cloud Armor Security Policies for Web Apps",
+    "done": false
+  },
+  {
+    "id": 29,
+    "domain": "DevOps",
+    "level": "Beginner",
+    "slug": "devops-docker-compose-ci-pipeline-lab",
+    "title": "DevOps Lab: Building Multi-Container Application with Docker Compose and CI Pipeline using GitHub Actions",
+    "done": false
+  },
+  {
+    "id": 30,
+    "domain": "DevSecOps",
+    "level": "Expert",
+    "slug": "devsecops-automated-incident-response-aws-lambda-lab",
+    "title": "DevSecOps Lab: Automated Incident Response with AWS Lambda, CloudWatch Events, and Secrets Manager",
+    "done": false
   }
 ]
