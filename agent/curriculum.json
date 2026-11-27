@@ -157,7 +157,7 @@
     "level": "Intermediate",
     "slug": "devsecops-ci-sast-dast-container-scanning-lab",
     "title": "DevSecOps Lab: Integrating SAST, DAST, and Container Scanning into CI Pipelines",
-    "done": false
+    "done": true
   },
   {
     "id": 21,
